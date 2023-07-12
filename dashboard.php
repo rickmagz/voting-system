@@ -1,3 +1,13 @@
+<?php
+session_start();
+include 'db.php';
+
+$first_name = $_SESSION['first_name'];
+$last_name = $_SESSION['last_name'];
+$student_id = $_SESSION['id'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,12 +32,12 @@
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img src="assets/img/ISAT-U-logo-shadow1.png" width="50px" height="50px"><img src="assets/img/sr-logo.png" width="50px" height="50px"><span style="margin-left: 9px;font-family: Muli;color: var(--bs-blue);font-weight: bold;">ISATU Miagao Campus <br>Student Republic Election</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.html">VOTE NOW</a></li>
-                    <li class="nav-item" style="padding: 8px;"><a class="nav-link active" style="padding: 0px;" href="dashboard.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="candidates.html">Candidates</a></li>
+                    <li class="nav-item"><a class="nav-link" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php">VOTE NOW</a></li>
+                    <li class="nav-item" style="padding: 8px;"><a class="nav-link active" style="padding: 0px;" href="dashboard.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="candidates.php">Candidates</a></li>
                     <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" href="myaccount.html">My Account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.html">Log out</a></li>
+                    <li class="nav-item"><a class="nav-link" href="myaccount.php">My Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
                     <li class="nav-item"></li>
                 </ul>
             </div>
@@ -37,7 +47,7 @@
         <div class="container" style="margin-top: 18px;">
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-5">
-                    <h1 class="bounce animated" style="font-family: Muli;font-weight: bold;letter-spacing: 0px;text-align: center;"><strong>WELCOME,</strong><br><strong>Student!</strong></h1>
+                    <h1 class="bounce animated" style="font-family: Muli;font-weight: bold;letter-spacing: 0px;text-align: center;"><strong>WELCOME,</strong><br><strong><?php echo $first_name; ?>!</strong></h1>
                     <figure class="figure" data-aos="zoom-out" style="padding-left: 45px;"><img class="img-fluid figure-img" src="assets/img/OIP.jpg" alt="vote illustration" style="text-align: center;"></figure>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-7">
