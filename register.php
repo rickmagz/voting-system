@@ -40,7 +40,7 @@ include 'db.php';
       </div>
     </div>
     <div class="container">
-      <form action="register.php" method="POST" id="register">
+      <form action="register.php" method="POST" id="register" enctype='multipart/form-data'>
         <hr />
         <div class="card" style="
               box-shadow: 0px 0px 20px var(--bs-gray);
@@ -59,7 +59,7 @@ include 'db.php';
                 </div>
               </div>
               <div class="col align-self-center" id="lastname">
-                <span style="font-size: 16px; font-family: Muli">Student Picture</span><input class="form-control" type="file" name="image" />
+                <span style="font-size: 16px; font-family: Muli">Student Picture</span><input class="form-control" type="file" name="image" required />
               </div>
             </div>
             <div class="row">
@@ -148,18 +148,44 @@ include 'db.php';
     </div>
   </header>
   <?php
+
+  $upload_folder = "uploads/";
+
   if (isset($_POST['register'])) {
     $student_id = $_POST['id'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $council = $_POST['council'];
     $course = $_POST['course'];
+    $major = $_POST['major'];
     $year = $_POST['year'];
     $section = $_POST['section'];
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    $check_id = mysqli_query($cxn, "SELECT * FROM student WHERE student_id = '$student_id'") or die("Error in query: $check_id." . mysqli_error($cxn));
 
+    $check_username = mysqli_query($cxn, "SELECT * FROM student WHERE username ='$username'") or die("Error in query: $check_username." . mysqli_error($cxn));
+
+    if ($check_id->num_rows == 1 && $check_username == 1) {
+      echo "<script type='text/javascript'> alert('Student ID and/or Username has been registered!'); location.href = 'register.php'; </script>";
+    } else {
+      $image = basename($_FILES["image"]["name"]);
+      $targetFileFolder = $upload_folder . $image;
+      $fileType = pathinfo($targetFileFolder, PATHINFO_EXTENSION);
+      $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+
+      $register = mysqli_query($cxn, "INSERT INTO student(student_id,username,password,first_name,last_name,council,course,major,year,section) VALUES('$student_id','$username','$password','$firstname','$lastname','$council','$course','$major','$year','$section')") or die("Error in query: $register." . mysqli_error($cxn));
+
+      if (in_array($fileType, $allowTypes)) {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFileFolder)) {
+          $upload = $cxn->query("INSERT INTO uploads(student_id,filename) VALUES('$student_id','$image')");
+        }
+      }
+
+
+      echo "<script type='text/javascript'> alert('Registration Successful! Click to log in.'); location.href = 'login.php'; </script>";
+    }
   }
   ?>
   <footer style="background: var(--bs-body-bg); margin-top: 30px;" data-bs-spy="scroll">
