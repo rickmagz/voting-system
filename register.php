@@ -159,7 +159,7 @@ include 'db.php';
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    
+
   }
   ?>
   <footer style="background: var(--bs-body-bg); margin-top: 30px;" data-bs-spy="scroll">
