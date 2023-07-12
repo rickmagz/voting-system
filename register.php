@@ -55,7 +55,7 @@ include 'db.php';
               <div class="col" id="firstname">
                 <div class="form-floating mb-3 mt-3">
                   <input type="text" class="form-control" id="id" placeholder="Enter Student ID" name="id" required />
-                  <label for="email">Student ID</label>
+                  <label for="id">Student ID</label>
                 </div>
               </div>
               <div class="col align-self-center" id="lastname">
@@ -77,49 +77,47 @@ include 'db.php';
               </div>
             </div>
             <div class="row">
-              <div class="col" id="council">
-                <select class="form-select form-select-lg mb-3 mt-3" name="council" required>
-                  <option selected>Select Council</option>
+              <div class="col">
+                <select class="form-select  mb-3 mt-3" name="council" id="council" required>
+                  <option selected disabled>Select Council</option>
                   <option value="Education">Education</option>
                   <option value="BIT">B.I.T.</option>
                   <option value="HBM">H.B.M.</option>
                   <option value="ComStud">Computer Studies</option>
                 </select>
               </div>
-              <div class="col" id="course">
-                <select class="form-select form-select-lg mb-3 mt-3" name="course" required>
-                  <option selected>Select Course</option>
-                  <option value="Education">Education</option>
-                  <option value="BIT">B.I.T.</option>
-                  <option value="HBM">H.B.M.</option>
-                  <option value="ComStud">Computer Studies</option>
+              <div class="col">
+                <select class="form-select mb-3 mt-3" id="course" name="course" required>
+
                 </select>
               </div>
             </div>
             <div class="row">
-              <div class="col-xl-6" id="major">
-                <select class="form-select form-select-lg mb-3 mt-3" name="major" required>
-                  <option selected>Select Major</option>
-                  <option value="Education">Education</option>
-                  <option value="BIT">B.I.T.</option>
-                  <option value="HBM">H.B.M.</option>
-                  <option value="ComStud">Computer Studies</option>
+              <div class="col-xl-6">
+                <select class="form-select mb-3 mt-3" name="major" id="major" required>
+
                 </select>
               </div>
               <div class="col-xl-3" id="year">
-                <select class="form-select form-select-lg mb-3 mt-3" name="year" required>
-                  <option selected>Select Year</option>
+                <select class="form-select mb-3 mt-3" name="year" required>
+                  <option selected disabled>Select Year</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>
               </div>
               <div class="col-xl-3" id="section">
-                <select class="form-select form-select-lg mb-3 mt-3" name="section" required>
-                  <option selected>Select Section</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                <select class="form-select mb-3 mt-3" name="section" required>
+                  <option selected disabled>Select Section</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                  <option value="H">H</option>
+                  <option value="I">I</option>
                 </select>
               </div>
             </div>
@@ -205,6 +203,71 @@ include 'db.php';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/bs-init.js"></script>
   <script src="assets/js/new-age.js"></script>
+  <script>
+    var council = document.getElementById("council");
+    var course = document.getElementById("course");
+    var major = document.getElementById("major");
+
+    function courseOptions() {
+      var councilname = council.value;
+
+      course.innerHTML = "";
+
+      if (councilname == "Education") {
+        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option value='BEED'>Elementary Education</option>";
+        course.innerHTML += "<option value='BSED'>Secondary Education</option>";
+        course.innerHTML += "<option value='BTVTED'>Technical-Vocational Teacher Education</option>";
+        course.innerHTML += "<option value='BTLED'>Technology and Livelihood Education</option>";
+      } else if (councilname == "BIT") {
+        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option value='BIT'>Bachelor in Industrial Technology</option>";
+      } else if (councilname == "HBM") {
+        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option value='HM'>Hospitality Management</option>";
+        course.innerHTML += "<option value='TM'>Tourism Management</option>";
+        course.innerHTML += "<option value='Entrep'>Entrepreneurship</option>";
+      } else if (councilname == "ComStud") {
+        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option value='InfoTech'>Information Technology</option>";
+        course.innerHTML += "<option value='InfoSys'>Information Systems</option>";
+      }
+    }
+
+    council.addEventListener("change", courseOptions);
+
+    function majorOptions() {
+      var coursename = course.value;
+
+      major.innerHTML = "";
+
+      if (coursename == "BSED") {
+        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option value='English'>English</option>";
+        major.innerHTML += "<option value='Filipino'>Filipino</option>";
+        major.innerHTML += "<option value='Mathematics'>Mathematics</option>";
+        major.innerHTML += "<option value='Science'>Science</option>";
+        major.innerHTML += "<option value='Social Studies'>Social Studies</option>";
+      } else if (coursename == "BTVTED") {
+        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option value='Automotive Technology'>Automotive Technology</option>";
+        major.innerHTML += "<option value='Electrical Technology'>Electrical Technology</option>";
+        major.innerHTML += "<option value='Food Service Management'>Food Service Management</option>";
+        major.innerHTML += "<option value='Drafting Technology'>Drafting Technology</option>";
+        major.innerHTML += "<option value='Electronics Technology'>Electronics Technology</option>";
+        major.innerHTML += "<option value='Garments, Fashion and Design'>Garments, Fashion and Design</option>";
+      } else if (coursename == "BTLED") {
+        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option value='Home Economics'>Home Economics</option>";
+        major.innerHTML += "<option value='Industrial Arts'>Industrial Arts</option>";
+      } else {
+        major.innerHTML += "<option selected disabled>Select Major</option>";
+        major.innerHTML += "<option value='None'>N/A</option>";
+      }
+    }
+
+    course.addEventListener("change", majorOptions);
+  </script>
 </body>
 
 </html>
