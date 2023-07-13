@@ -173,11 +173,9 @@ include 'db.php';
       $fileType = pathinfo($targetFileFolder, PATHINFO_EXTENSION);
       $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
 
-      $register = mysqli_query($cxn, "INSERT INTO student(student_id,username,password,first_name,last_name,council,course,major,year,section) VALUES('$student_id','$username','$password','$firstname','$lastname','$council','$course','$major','$year','$section')") or die("Error in query: $register." . mysqli_error($cxn));
-
       if (in_array($fileType, $allowTypes)) {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFileFolder)) {
-          $upload = $cxn->query("INSERT INTO uploads(student_id,filename) VALUES('$student_id','$image')");
+          $register = mysqli_query($cxn, "INSERT INTO student(student_id,username,password,first_name,last_name,council,course,major,year,section,image_file) VALUES('$student_id','$username','$password','$firstname','$lastname','$council','$course','$major','$year','$section','$image')") or die("Error in query: $register." . mysqli_error($cxn));
         }
       }
 

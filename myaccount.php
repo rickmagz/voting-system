@@ -92,11 +92,11 @@ if (mysqli_num_rows($get_id) > 0) {
                   ">
 
                 <?php
-                $get_image = mysqli_query($cxn, "SELECT * FROM uploads WHERE student_id='$student_id'") or die("Error in query: $get_image." . mysqli_error($cxn));
+                $get_image = mysqli_query($cxn, "SELECT * FROM student WHERE student_id='$student_id'") or die("Error in query: $get_image." . mysqli_error($cxn));
 
                 if (mysqli_num_rows($get_image) > 0) {
                   $i = mysqli_fetch_assoc($get_image);
-                  $image = $i['filename'];
+                  $image = $i['image_file'];
                 }
                 ?>
                 <div class="col-5 col-sm-4 col-md-3 col-lg-2 col-xl-2 offset-0" style="height: 98.975px; margin-bottom: 6px">
