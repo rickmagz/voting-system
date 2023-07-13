@@ -2,7 +2,7 @@
 session_start();
 include 'db.php';
 
-$id = $_GET['id'];
+$id = $_SESSION['id'];
 
 $edit_account = mysqli_query($cxn, "SELECT * FROM student WHERE student_id='$id'") or die("Error in query: $edit_account." . mysqli_error($cxn));
 
