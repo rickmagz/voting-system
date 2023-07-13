@@ -10,7 +10,7 @@ $get_id = mysqli_query($cxn, "SELECT * FROM student WHERE student_id='$student_i
 
 if (mysqli_num_rows($get_id) > 0) {
   $i = mysqli_fetch_assoc($get_id);
-  $link_id = $i['id'];
+  $_SESSION['link_id'] = $i['id'];
 }
 
 ?>
@@ -130,7 +130,7 @@ if (mysqli_num_rows($get_id) > 0) {
                         padding-right: 30px;
                         padding-left: 30px;
                         text-align: center;
-                      " href="editprofile.php?id=<?php echo $link_id; ?>" target="_self">edit profile</a>
+                      " href="editprofile.php?id=<?php echo $_SESSION['link_id']; ?>" target="_self">edit profile</a>
                 </div>
               </div>
               <?php
