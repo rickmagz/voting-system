@@ -83,7 +83,7 @@ include 'db.php';
                   <option value="Education">Education</option>
                   <option value="BIT">B.I.T.</option>
                   <option value="HBM">H.B.M.</option>
-                  <option value="ComStud">Computer Studies</option>
+                  <option value="Computer Studies">Computer Studies</option>
                 </select>
               </div>
               <div class="col">
@@ -224,13 +224,13 @@ include 'db.php';
         course.innerHTML += "<option value='BIT'>Bachelor in Industrial Technology</option>";
       } else if (councilname == "HBM") {
         course.innerHTML += "<option disabled>Select Course</option>";
-        course.innerHTML += "<option value='HM'>Hospitality Management</option>";
-        course.innerHTML += "<option value='TM'>Tourism Management</option>";
-        course.innerHTML += "<option value='Entrep'>Entrepreneurship</option>";
-      } else if (councilname == "ComStud") {
+        course.innerHTML += "<option value='Hospitality Management'>Hospitality Management</option>";
+        course.innerHTML += "<option value='Tourism Management'>Tourism Management</option>";
+        course.innerHTML += "<option value='Entrepreneurship'>Entrepreneurship</option>";
+      } else if (councilname == "Computer Studies") {
         course.innerHTML += "<option disabled>Select Course</option>";
-        course.innerHTML += "<option value='InfoTech'>Information Technology</option>";
-        course.innerHTML += "<option value='InfoSys'>Information Systems</option>";
+        course.innerHTML += "<option value='Information Technology'>Information Technology</option>";
+        course.innerHTML += "<option value='Information Systems'>Information Systems</option>";
       }
     }
 
