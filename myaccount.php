@@ -6,6 +6,13 @@ $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
 $student_id = $_SESSION['id'];
 
+$get_id = mysqli_query($cxn, "SELECT * FROM student WHERE student_id='$student_id'") or die("Error in query: $get_id." . mysqli_error($cxn));
+
+if (mysqli_num_rows($get_id) > 0) {
+  $i = mysqli_fetch_assoc($get_id);
+  $link_id = $i['id'];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -123,7 +130,7 @@ $student_id = $_SESSION['id'];
                         padding-right: 30px;
                         padding-left: 30px;
                         text-align: center;
-                      " href="editprofile.php" target="_self">edit profile</a>
+                      " href="editprofile.php?id=<?php echo $link_id; ?>" target="_self">edit profile</a>
                 </div>
               </div>
               <?php
