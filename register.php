@@ -258,9 +258,20 @@ include 'db.php';
         major.innerHTML += "<option disabled>Select Major</option>";
         major.innerHTML += "<option value='Home Economics'>Home Economics</option>";
         major.innerHTML += "<option value='Industrial Arts'>Industrial Arts</option>";
+      } else if (coursename == "BIT") {
+        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option value='Architectural Drafting Technology'>Architectural Drafting Technology</option>";
+        major.innerHTML += "<option value='Cosmetology'>Cosmetology</option>";
+        major.innerHTML += "<option value='Electronics Technology'>Electronics Technology</option>";
+        major.innerHTML += "<option value='Fashion and Apparel Technology'>Fashion and Apparel Technology</option>";
+        major.innerHTML += "<option value='Welding and Fabrication Technology'>Welding and Fabrication Technology</option>";
+        major.innerHTML += "<option value='Heating Ventilating Air Conditioning-Refrigeration Technology'>Heating Ventilating Air Conditioning-Refrigeration Technology</option>";
+        major.innerHTML += "<option value='Automotive Technology'>Automotive Technology</option>";
+        major.innerHTML += "<option value='Electrical Technology'>Electrical Technology</option>";
+        major.innerHTML += "<option value='Food Technology'>Food Technology</option>";
       } else {
-        major.innerHTML += "<option selected disabled>Select Major</option>";
-        major.innerHTML += "<option value='None'>N/A</option>";
+        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option selected value='None'>N/A</option>";
       }
     }
 
