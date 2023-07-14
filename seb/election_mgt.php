@@ -201,7 +201,7 @@ include '../db.php';
                                                     <td><?php echo $course; ?></td>
                                                     <td><?php echo $major; ?></td>
                                                     <td class="text-center" style="padding: 3px;">
-                                                        <a class="btn btn-danger btn-sm" type="button" href="delete_candidate.php?id=<?php echo $cand_sid; ?>" target="_blank">delete</button>
+                                                        <a class="btn btn-danger btn-sm" type="button" href="delete_candidate.php?id=<?php echo $cand_sid; ?>" target="_self">delete</button>
                                                     </td>
                                                 </tr>
                                         <?php
