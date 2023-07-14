@@ -1,10 +1,58 @@
+<?php
+session_start();
+include '../db.php';
+
+//get total number of voters in education council
+$educ = mysqli_query($cxn, "SELECT council FROM student WHERE council='Education'");
+$educ_voters = mysqli_num_rows($educ);
+
+//get total number of voters in computer studies council
+$comstud = mysqli_query($cxn, "SELECT council FROM student WHERE council='Computer Studies'");
+$comstud_voters = mysqli_num_rows($comstud);
+
+//get total number of voters in BIT council
+$bit = mysqli_query($cxn, "SELECT council FROM student WHERE council='BIT'");
+$bit_voters = mysqli_num_rows($bit);
+
+//get total number of voters in HBM council
+$hbm = mysqli_query($cxn, "SELECT council FROM student WHERE council='HBM'");
+$hbm_voters = mysqli_num_rows($hbm);
+
+//get total 
+$total = mysqli_query($cxn, "SELECT student_id FROM student");
+$total_voters = mysqli_num_rows($total);
+
+//get total number of ballot from education council
+$ed = mysqli_query($cxn, "SELECT council FROM votes WHERE council='Education'");
+$ed_ballots = mysqli_num_rows($ed);
+
+//get total number of ballot from computer studies council
+$cs = mysqli_query($cxn, "SELECT council FROM votes WHERE council='Computer Studies'");
+$cs_ballots = mysqli_num_rows($cs);
+
+//get total number of ballot from BIT council
+$idtech = mysqli_query($cxn, "SELECT council FROM votes WHERE council='BIT'");
+$bit_ballots = mysqli_num_rows($idtech);
+
+//get total number of ballot from HBM council
+$hbmgt = mysqli_query($cxn, "SELECT council FROM votes WHERE council='HBM'");
+$hbm_ballots = mysqli_num_rows($hbmgt);
+
+//get total ballots
+$ballots = mysqli_query($cxn, "SELECT council from votes");
+$total_ballot = mysqli_num_rows($ballots);
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ISATU Voting System</title>
+    <title>ISATU Miagao Campus Student Republic Election - SEC Dashboard</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900&amp;display=swap">
@@ -17,17 +65,17 @@
     <link rel="stylesheet" href="../assets/css/Login-Form-Basic-icons.css">
 </head>
 
-<body data-bs-spy="scroll" data-bs-smooth-scroll="true" data-bs-target="#navcol-2" style="background: url(&quot;../assets/img/pattern.png&quot;) center, var(--bs-white);">
+<body data-bs-spy="scroll" data-bs-smooth-scroll="true" data-bs-target="#navcol-2" style="background: url(&quot;../assets/img/pattern.png&quot;) center, var(--bs-white);" id="masthead">
     <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-none" style="padding-top: 0px;padding-bottom: 0px;background: linear-gradient(-180deg, var(--bs-yellow) 39%, rgba(255,255,255,0.5) 100%);">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img width="75" height="75" src="../assets/img/ISAT-U-logo-shadow1.png"><img width="75" height="75" src="../assets/img/sr-logo.png"><span style="margin-left: 4px;font-family: Lato, sans-serif;font-weight: bold;">ISATU Miagao Campus <br>Student Republic Election <br>Dashboard</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto" style="color: var(--bs-black);font-weight: bold;">
-                    <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="home.html" style="font-size: 18px;">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#masthead" style="font-size: 18px;">Home</a></li>
                     <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#candidates" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">The Candidates</a></li>
                     <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#tally" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">Tally of Votes</a></li>
                     <li class="nav-item dropstart"><a class="nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">More</a>
-                        <div class="dropdown-menu dropdown-menu-start" style="border-radius: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;border-width: 1px;color: var(--bs-navbar-brand-color);"><a class="dropdown-item" style="--bs-body-color: var(--bs-navbar-brand-color);" href="election_mgt.html">Election<br>Management</a><a class="dropdown-item" href="seb.html">About S.E.B.</a><a class="dropdown-item" href="results.html">Print Election<br>Results</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#" style="text-align: left;"><img width="30" height="30" src="../assets/img/Screenshot_2021-01-28-04-41-56-92.jpg">&nbsp;Admin</a><a class="dropdown-item" href="settings.html" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a><a class="dropdown-item" href="logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
+                        <div class="dropdown-menu dropdown-menu-start" style="border-radius: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;border-width: 1px;color: var(--bs-navbar-brand-color);"><a class="dropdown-item" style="--bs-body-color: var(--bs-navbar-brand-color);" href="election_mgt.php">Election<br>Management</a><a class="dropdown-item" href="seb.php">About S.E.B.</a><a class="dropdown-item" href="results.php">Print Election<br>Results</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#" style="text-align: left;"><img width="30" height="30" src="../assets/img/Screenshot_2021-01-28-04-41-56-92.jpg">&nbsp;Admin</a><a class="dropdown-item" href="settings.php" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a><a class="dropdown-item" href="logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
                         </div>
                     </li>
                 </ul>
@@ -35,9 +83,9 @@
         </div>
     </nav>
     <main style="margin: 25px;margin-bottom: 70px;">
-        <div class="row" id="masthead" style="margin-top: 128px;margin-right: 24px;margin-left: 24px;">
+        <div class="row" style="margin-top: 128px;margin-right: 24px;margin-left: 24px;">
             <div class="col-sm-10 col-md-12 col-lg-4 col-xl-5 offset-sm-1 offset-md-0 offset-lg-0 offset-xl-0 text-center align-self-center" data-aos="zoom-out" id="welcome" style="text-align: left;padding: 0px;padding-right: -1px;">
-                <h2 class="text-center" style="font-family: Muli;font-weight: bold;margin: 0px;">Hi, admin!</h2><img class="img-fluid" src="../assets/img/undraw_Engineering_team_a7n2.png" style="width: 474px;" width="465" height="271">
+                <h2 class="text-center" style="font-family: Muli;font-weight: bold;margin: 0px;">Hello, <?php echo $_SESSION['first_name']; ?>!</h2><img class="img-fluid" src="../assets/img/undraw_Engineering_team_a7n2.png" style="width: 474px;" width="465" height="271">
             </div>
             <div class="col align-self-center">
                 <div class="container">
@@ -55,23 +103,23 @@
                                     <tbody style="border-width: 1px;border-style: solid;text-align: center;">
                                         <tr style="background: var(--bs-white);">
                                             <td>Computer Studies<br></td>
-                                            <td>-</td>
+                                            <td><?php echo $comstud_voters; ?></td>
                                         </tr>
                                         <tr>
                                             <td style="background: var(--bs-white);">Education</td>
-                                            <td style="background: var(--bs-white);">-</td>
+                                            <td style="background: var(--bs-white);"><?php echo $educ_voters; ?></td>
                                         </tr>
                                         <tr>
                                             <td style="background: var(--bs-white);">Hotel and Business Mgt.</td>
-                                            <td style="background: var(--bs-white);">-</td>
+                                            <td style="background: var(--bs-white);"><?php echo $hbm_voters; ?></td>
                                         </tr>
                                         <tr>
                                             <td style="background: var(--bs-white);">Industrial Technology</td>
-                                            <td style="background: var(--bs-white);">-</td>
+                                            <td style="background: var(--bs-white);"><?php echo $bit_voters; ?></td>
                                         </tr>
                                         <tr>
                                             <td class="text-end text-bg-warning">TOTAL</td>
-                                            <td class="text-bg-light">-</td>
+                                            <td class="text-bg-light"><?php echo $total_voters; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -90,23 +138,23 @@
                                     <tbody style="border-width: 1px;border-style: solid;text-align: center;background: var(--bs-white);">
                                         <tr>
                                             <td>Computer Studies </td>
-                                            <td>-</td>
+                                            <td><?php echo $cs_ballots; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Education</td>
-                                            <td>-</td>
+                                            <td><?php echo $ed_ballots; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Hotel and Business Mgt.</td>
-                                            <td>-</td>
+                                            <td><?php echo $hbm_ballots; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Industrial Technology</td>
-                                            <td>-</td>
+                                            <td><?php echo $bit_ballots; ?></td>
                                         </tr>
                                         <tr>
                                             <td class="text-end text-bg-warning">TOTAL</td>
-                                            <td>-</td>
+                                            <td><?php echo $total_ballot; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -140,36 +188,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="container" data-aos="zoom-out" data-aos-delay="200" id="vicepres" style="margin-bottom: 10px;margin-top: 10px;">
@@ -187,36 +206,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
+
                     </div>
                 </div>
                 <div class="container" data-aos="zoom-out" data-aos-delay="200" id="senator" style="margin-bottom: 10px;margin-top: 10px;">
@@ -234,36 +225,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="container" data-aos="zoom-out" data-aos-delay="200" id="batchrep" style="margin-bottom: 10px;margin-top: 10px;">
@@ -281,36 +243,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="container" data-aos="zoom-out" data-aos-delay="200" id="gov" style="margin-bottom: 10px;margin-top: 10px;">
@@ -328,36 +261,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="container" data-aos="zoom-out" data-aos-delay="200" id="vicegov" style="margin-bottom: 10px;margin-top: 10px;">
@@ -375,36 +279,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
