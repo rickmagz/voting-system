@@ -52,7 +52,7 @@ $total_ballot = mysqli_num_rows($ballots);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ISATU Miagao Campus Student Republic Election - SEC Dashboard</title>
+    <title>Home - ISATU Miagao Campus Student Republic Election - SEC Dashboard</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900&amp;display=swap">
