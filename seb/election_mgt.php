@@ -47,7 +47,7 @@ include '../db.php';
                 <div>
                     <ul class="nav nav-tabs nav-justified text-start" role="tablist">
                         <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Add Candidate</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Modify/Delete Candidate Info</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Delete Candidate Info</a></li>
                     </ul>
                     <div class="tab-content" style="border-top-left-radius: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
                         <div class="tab-pane fade show active" role="tabpanel" id="tab-1" style="border-top-left-radius: 0px;border: 1px solid var(--bs-gray-300);border-top-width: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
@@ -161,22 +161,57 @@ include '../db.php';
                         </div>
                         <div class="tab-pane fade" role="tabpanel" id="tab-2" style="border-top-left-radius: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;border: 1px solid var(--bs-gray-300);border-top-width: 0px;padding: 12px;">
                             <div class="table-responsive-lg text-center d-xl-flex">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered" style="overflow-x: auto;">
                                     <thead style="background: var(--bs-blue);color: var(--bs-white);">
                                         <tr>
-                                            <th>Candidate Name</th>
+                                            <th class="text-center">Student ID</th>
+                                            <th class="text-center">Candidate Name</th>
                                             <th class="text-center">Running Position</th>
                                             <th class="text-center">Council</th>
-                                            <th class="text-center">Actions</th>
+                                            <th class="text-center">Course</th>
+                                            <th class="text-center">Major</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>John Smith</td>
-                                            <td>President</td>
-                                            <td>Computer Studies</td>
-                                            <td class="text-center" style="padding: 3px;"><button class="btn btn-primary btn-sm" type="button" data-bs-target="#editmodal" data-bs-toggle="modal">edit</button><button class="btn btn-danger btn-sm" type="button" data-bs-target="#deletemodal" data-bs-toggle="modal">delete</button></td>
-                                        </tr>
+                                        <?php
+                                        $i = 0;
+                                        $candidates = mysqli_query($cxn, "SELECT * FROM candidates ORDER BY timestamp desc") or die();
+                                        $candidates_query = mysqli_num_rows($candidates);
+
+                                        if ($candidates_query > 0) {
+                                            while ($c = mysqli_fetch_array($candidates)) {
+                                                $cand_id = $c['id'];
+                                                $cand_sid = $c['student_id'];
+                                                $fname = $c['first_name'];
+                                                $lname = $c['last_name'];
+                                                $position = $c['position'];
+                                                $council = $c['council'];
+                                                $course = $c['course'];
+                                                $major = $c['major'];
+
+                                                $i++;
+
+                                        ?>
+                                                <tr class="candidate<?php echo $cand_id; ?>">
+                                                    <td><?php echo $cand_sid; ?></td>
+                                                    <td><?php echo $fname; ?> <?php echo $lname; ?></td>
+                                                    <td><?php echo $position; ?></td>
+                                                    <td><?php echo $council; ?></td>
+                                                    <td><?php echo $course; ?></td>
+                                                    <td><?php echo $major; ?></td>
+                                                    <td class="text-center" style="padding: 3px;">
+                                                        <a class="btn btn-danger btn-sm" type="button" href="delete_candidate.php?id=<?php echo $cand_sid; ?>" target="_blank">delete</button>
+                                                    </td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        } else {
+                                            echo "<tr>
+                                                    <td colspan='7'>No record found.</td>
+                                                    </tr>";
+                                        }
+                                        ?>
                                         <tr></tr>
                                     </tbody>
                                 </table>
@@ -192,58 +227,7 @@ include '../db.php';
             <p style="color: var(--bs-white);font-size: 16px;">©&nbsp;ISATU - Miagao Campus Student Republic Election 2023 All Rights Reserved.</p>
         </div>
     </footer>
-    <div class="modal fade" role="dialog" tabindex="-1" id="editmodal" style="border-radius: 5px;">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white" style="background: var(--bs-blue);border-radius: 7px;height: 50px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;">
-                    <h5 class="modal-title" style="font-family: Lato, sans-serif;">Edit Candidate Information</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editform" action="election_mgt.php" method="post" name="editform" style="border-top-width: 1px;border-top-style: none;">
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 col-xl-8 offset-md-1 offset-lg-1 offset-xl-1" style="padding-bottom: 12px;padding-top: 12px;"><label class="form-label" style="margin: 0px;">Select Position</label><select class="form-select form-select-sm" name="pos" autofocus="" required="" style="margin-left: 0px;">
-                                    <optgroup label="Select Position">
-                                        <option value="prsident">President</option>
-                                        <option value="vicepres">Vice President</option>
-                                        <option value="senator">Senator</option>
-                                        <option value="batchrep">Batch Representative</option>
-                                        <option value="gov">Governor</option>
-                                        <option value="vicegov">Vice Governor</option>
-                                    </optgroup>
-                                </select></div>
-                            <div class="col-md-6 col-lg-6 col-xl-8 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;"><label class="form-label" style="margin: 0px;padding: 0px;">Student ID</label><input class="form-control form-control-sm" type="text" name="id" placeholder="Enter Student ID" required=""></div>
-                            <div class="col-md-6 col-lg-6 col-xl-8 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;"><label class="form-label" style="margin: 0px;padding: 0px;">Council</label><select class="form-select form-select-sm" name="council" autofocus="" required="" style="margin-left: 0px;">
-                                    <optgroup label="Select Council">
-                                        <option value="comstud">Computer Studies</option>
-                                        <option value="educ">Education</option>
-                                        <option value="hbm">Hotel &amp; Business Mgt.</option>
-                                        <option value="bit">Industrial Technology</option>
-                                    </optgroup>
-                                </select></div>
-                            <div class="col-md-6 col-lg-6 col-xl-8 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;"><label class="form-label" style="margin: 0px;padding: 0px;">First Name</label><input class="form-control form-control-sm" type="text" name="first_name" placeholder="Enter First Name" required=""></div>
-                            <div class="col-md-6 col-lg-6 col-xl-8 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;"><label class="form-label" style="margin: 0px;padding: 0px;">Last Name</label><input class="form-control form-control-sm" type="text" name="last_name" placeholder="Enter Last Name" required=""></div>
-                            <div class="col-md-6 col-lg-6 col-xl-8 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;"><label class="form-label" style="margin: 0px;padding: 0px;">Contact Number</label><input class="form-control form-control-sm" type="text" name="contactno" placeholder="Enter Contact No." required=""></div>
-                            <div class="col-md-6 col-lg-6 col-xl-8 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;"><label class="form-label" style="margin: 0px;padding: 0px;">Email Address</label><input class="form-control form-control-sm" type="text" name="email" placeholder="Enter E-mail Address" required="" inputmode="email"></div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer"><button class="btn btn-danger" type="button" data-bs-dismiss="modal" style="border-radius: 20px;">cancel</button><button class="btn btn-primary" type="button" style="border-radius: 20px;" form="editform">Save</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="deletemodal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background: var(--bs-red);color: var(--bs-modal-bg);height: 50px;">
-                    <h5 class="modal-title">Delete Candidate?</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Candidate Name: </strong>John Smith<br><strong>Running Position:</strong>&nbsp;President<br><strong>Council: </strong>Computer Studies</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-danger" type="button" data-bs-dismiss="modal">cancel</button><button class="btn btn-primary" type="button">ok</button></div>
-            </div>
-        </div>
-    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/bs-init.js"></script>
