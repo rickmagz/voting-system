@@ -75,7 +75,7 @@ $total_ballot = mysqli_num_rows($ballots);
                     <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#tally" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">Tally of Votes</a></li>
                     <li class="nav-item dropstart"><a class="nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">More</a>
                         <div class="dropdown-menu dropdown-menu-start" style="border-radius: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;border-width: 1px;color: var(--bs-navbar-brand-color);"><a class="dropdown-item" style="--bs-body-color: var(--bs-navbar-brand-color);" href="election_mgt.php">Election<br>Management</a><a class="dropdown-item" href="seb.php">About S.E.B.</a><a class="dropdown-item" href="results.php">Print Election<br>Results</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#" style="text-align: left;"><img width="30" height="30" src="../assets/img/Screenshot_2021-01-28-04-41-56-92.jpg">&nbsp;Admin</a><a class="dropdown-item" href="settings.php" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a><a class="dropdown-item" href="logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#" style="text-align: left;"><img width="30" height="30" src="../assets/img/Screenshot_2021-01-28-04-41-56-92.jpg">&nbsp;<?php echo $_SESSION['first_name']; ?></a><a class="dropdown-item" href="settings.php" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a><a class="dropdown-item" href="logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
                         </div>
                     </li>
                 </ul>
@@ -178,16 +178,35 @@ $total_ballot = mysqli_num_rows($ballots);
                         <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">president</h4>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
+                        <?php
+                        //get presidential candidates
+                        $ip = 0;
+                        $get_pres = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='President' ORDER BY last_name asc");
+                        $pres = mysqli_num_rows($get_pres);
+
+                        if ($pres > 0) {
+                            while ($p = mysqli_fetch_array($get_pres)) {
+                                $fname = $p['first_name'];
+                                $lname = $p['last_name'];
+                                $position = $p['position'];
+                                $image = $p['image'];
+
+                                $ip++;
+                        ?>
+                                <div class="col-6 col-sm-3 col-md-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
+                                        </div>
+                                        <div class="card-body" style="text-align: center;">
+                                            <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" width="250px" height="250px" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                            }
+                        }
+                        ?>
 
                     </div>
                 </div>
@@ -196,17 +215,49 @@ $total_ballot = mysqli_num_rows($ballots);
                         <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Vice President</h4>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
+                        <?php
+                        //get vice presidential candidates
+                        $vp = 0;
+                        $get_vp = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice President' ORDER BY last_name asc");
+                        $vicepres = mysqli_num_rows($get_vp);
+
+                        if ($vicepres > 0) {
+                            while ($v = mysqli_fetch_array($get_vp)) {
+                                $fname = $v['first_name'];
+                                $lname = $v['last_name'];
+                                $position = $v['position'];
+                                $image = $v['image'];
+
+                                $vp++;
+                        ?>
+                                <div class="col-6 col-sm-3 col-md-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
+                                        </div>
+                                        <div class="card-body" style="text-align: center;">
+                                            <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                            <?php
+                            }
+                        } else {
+
+                            ?>
+                            <div class="col-6 col-sm-3 col-md-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Candidate Name</h4>
+                                    </div>
+                                    <div class="card-body" style="text-align: center;">
+                                        <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
+                        <?php
+                        }
+                        ?>
 
                     </div>
                 </div>
