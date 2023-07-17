@@ -18,15 +18,15 @@
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg py-3" style="box-shadow: 0px 0px 20px var(--bs-yellow);">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img src="assets/img/ISAT-U-logo-shadow1.png" width="50px" height="50px"><img src="assets/img/sr-logo.png" width="50px" height="50px"><span style="margin-left: 9px;font-family: Muli;color: var(--bs-blue);font-weight: bold;">ISATU Miagao Campus<br>Student Republic Election</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img src="assets/img/ISAT-U-logo-shadow1.png" width="50px" height="50px"><img src="assets/img/sr-logo.png" width="50px" height="50px"><span style="margin-left: 9px;font-family: Muli;color: var(--bs-blue);font-weight: bold;">ISATU Miagao Campus <br>Student Republic Election</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.html">VOTE NOW</a></li>
-                    <li class="nav-item" style="padding: 8px;"><a class="nav-link" style="padding: 0px;" href="dashboard.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="candidates.html">Candidates</a></li>
+                    <li class="nav-item"><a class="nav-link" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php">VOTE NOW</a></li>
+                    <li class="nav-item" style="padding: 8px;"><a class="nav-link active" style="padding: 0px;" href="dashboard.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="candidates.php">Candidates</a></li>
                     <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" href="myaccount.html">My Account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.html">Log out</a></li>
+                    <li class="nav-item"><a class="nav-link" href="myaccount.php">My Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
                     <li class="nav-item"></li>
                 </ul>
             </div>

@@ -30,9 +30,8 @@
         <div class="container">
             <p style="color: var(--bs-black);font-size: 16px;">©&nbsp;ISATU - Miagao Campus Student Republic Election 2023. All Rights Reserved.</p>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#" style="color: var(--bs-blue);text-decoration: none;">Privacy</a></li>
-                <li class="list-inline-item"><a href="#" style="color: var(--bs-blue);text-decoration: none;">Terms</a></li>
-                <li class="list-inline-item"><a href="#" style="color: var(--bs-blue);text-decoration: none;">Admin</a></li>
+
+                <li class="list-inline-item"><a href="seb/index.php" target="_self" style="color: var(--bs-blue);text-decoration: none;">Admin</a></li>
             </ul>
         </div>
     </footer>
