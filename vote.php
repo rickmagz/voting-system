@@ -1,3 +1,10 @@
+<?php
+session_start();
+include 'db.php';
+
+$student_id = $_SESSION['id'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,106 +54,181 @@
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="pres_select" style="text-align: left;">
                         <h6 style="font-family: Muli;text-align: left;">PRESIDENT (SELECT 1)</h6>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="pres-1" name="pres"><label class="form-check-label" for="pres-1">Candidate Name</label></div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="pres" name="pres"><label class="form-check-label" for="formCheck-2">Candidate Name<br></label></div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="pres" name="pres"><label class="form-check-label" for="formCheck-3">Candidate Name</label></div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="pres" name="pres"><label class="form-check-label" for="formCheck-4">Candidate Name</label></div>
-                    </div>
+
+                    <?php
+                    //get president candidates
+                    $p = 0;
+                    $pres_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='President'");
+                    if (mysqli_num_rows($pres_list) > 0) {
+                        while ($pres = mysqli_fetch_array($pres_list)) {
+                            $pres_id = $pres['student_id'];
+                            $pres_fname = $pres['first_name'];
+                            $pres_lname = $pres['last_name'];
+
+                            $p++;
+
+                    ?>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
+                                <div class="form-check"><input class="form-check-input" type="radio" id="pres" name="pres" value="<?php echo $pres_id; ?>"><label class="form-check-label" for="pres-1"><?php echo $pres_fname; ?> <?php echo $pres_lname; ?></label></div>
+                            </div>
+
+                    <?php
+                        }
+                    } else {
+                        echo '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1" style="color: red;">None registered.</div>';
+                    }
+                    ?>
+
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="vicepres_select">
                         <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">VICE PRESIDENT (SELECT 1)</h6>
                     </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="vice" name="vicepres"><label class="form-check-label" for="formCheck-5">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="vice" name="vicepres"><label class="form-check-label" for="formCheck-6">Candidate Name<br></label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="vice" name="vicepres"><label class="form-check-label" for="formCheck-7">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="vice" name="vicepres"><label class="form-check-label" for="formCheck-8">Candidate Name</label></div>
-                    </div>
+
+                    <?php
+                    //get vice pres candidates
+                    $vp = 0;
+                    $vp_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice President'");
+                    if (mysqli_num_rows($vp_list) > 0) {
+                        while ($vice = mysqli_fetch_array($vp_list)) {
+                            $vp_id = $vice['student_id'];
+                            $vp_fname = $vice['first_name'];
+                            $vp_lname = $vice['last_name'];
+
+                            $vp++;
+                    ?>
+                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
+                                <div class="form-check"><input class="form-check-input" type="radio" id="vice" name="vicepres" value="<?php echo $vp_id; ?>"><label class="form-check-label" for="formCheck-5"><?php echo $vp_fname; ?> <?php echo $vp_lname; ?></label></div>
+                            </div>
+                    <?php
+                        }
+                    } else {
+                        echo '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1" style="color: red;">None registered.</div>';
+                    }
+                    ?>
+
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="senator_select">
                         <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">SENATOR (SELECT 12)</h6>
                     </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen" name="sen"><label class="form-check-label" for="formCheck-9">Candidate Name<br></label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen" name="sen"><label class="form-check-label" for="formCheck-10">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen" name="sen"><label class="form-check-label" for="formCheck-11">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-1 offset-xl-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen" name="sen"><label class="form-check-label" for="formCheck-12">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0 offset-xl-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-5" name="sen"><label class="form-check-label" for="sen-5">Candidate Name<br></label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-6" name="sen"><label class="form-check-label" for="sen-6">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-1 offset-xl-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-7" name="sen"><label class="form-check-label" for="sen-7">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-8" name="sen"><label class="form-check-label" for="sen-8">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0 offset-xl-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-1" name="sen"><label class="form-check-label" for="sen-1">Candidate Name<br></label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-1 offset-xl-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-2" name="sen"><label class="form-check-label" for="sen-2">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-3" name="sen"><label class="form-check-label" for="sen-3">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="sen-4" name="sen"><label class="form-check-label" for="sen-4">Candidate Name</label></div>
-                    </div>
+
+                    <?php
+                    //get senator candidates
+                    $sen = 0;
+                    $sen_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Senator'");
+                    if (mysqli_num_rows($sen_list) > 0) {
+                        while ($s = mysqli_fetch_array($sen_list)) {
+                            $sen_id = $s['student_id'];
+                            $sen_fname = $s['first_name'];
+                            $sen_lname = $s['last_name'];
+
+                            $sen++;
+
+                    ?>
+
+                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-1 offset-xl-1">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="sen" name="sen[]" value="<?php echo $sen_id; ?>"><label class="form-check-label" for="formCheck-9"><?php echo $sen_fname; ?> <?php echo $sen_lname; ?><br></label></div>
+                            </div>
+
+                    <?php
+                        }
+                    } else {
+                        echo '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1" style="color: red;">None registered.</div>';
+                    }
+                    ?>
+
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="batchrep_select">
                         <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">BATCH REPRESENTATIVE (SELECT 2)</h6>
                     </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="batchrep" name="batchrep"><label class="form-check-label" for="sen-9">Candidate Name<br></label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="batchrep" name="batchrep"><label class="form-check-label" for="sen-10">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-0">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="batchrep" name="batchrep"><label class="form-check-label" for="sen-11">Candidate Name</label></div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="batchrep" name="batchrep"><label class="form-check-label" for="sen-12">Candidate Name</label></div>
-                    </div>
+
+                    <?php
+                    //get batch rep candidates
+                    $b = 0;
+                    $br_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative'");
+                    if (mysqli_num_rows($br_list) > 0) {
+                        while ($br = mysqli_fetch_array($br_list)) {
+                            $br_id = $br['student_id'];
+                            $br_fname = $br['first_name'];
+                            $br_lname = $br['last_name'];
+
+                            $b++;
+                    ?>
+
+                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="batchrep" name="batchrep" value="<?php echo $br_id; ?>"><label class="form-check-label" for="sen-9"><?php echo $br_fname; ?> <?php echo $br_lname; ?> </label></div>
+                            </div>
+
+                    <?php
+
+                        }
+                    } else {
+                        echo '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1" style="color: red;">None registered.</div>';
+                    }
+                    ?>
+
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="gov_select">
                         <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">GOVERNOR (SELECT 1)</h6>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="gov" name="gov"><label class="form-check-label" for="formCheck-1">Candidate Name</label></div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-0">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="gov" name="gov"><label class="form-check-label" for="gov-1">Candidate Name</label></div>
-                    </div>
+
+                    <?php
+                    //get governor candidates
+                    $gov = 0;
+                    $gov_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor'");
+                    if (mysqli_num_rows($gov_list) > 0) {
+                        while ($g = mysqli_fetch_array($gov_list)) {
+                            $gov_id = $g['student_id'];
+                            $gov_fname = $g['first_name'];
+                            $gov_lname = $g['last_name'];
+
+                            $gov++;
+
+                    ?>
+
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
+                                <div class="form-check"><input class="form-check-input" type="radio" id="gov" name="gov" value="<?php echo $gov_id; ?>"><label class="form-check-label" for="formCheck-1"><?php echo $gov_fname; ?> <?php echo $gov_lname; ?></label></div>
+                            </div>
+
+                    <?php
+
+                        }
+                    } else {
+                        echo '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1" style="color: red;">None registered.</div>';
+                    }
+                    ?>
+
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="vicegov_select">
                         <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">VICE GOVERNOR (SELECT 1)</h6>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="vicegov" name="vicegov"><label class="form-check-label" for="gov-1">Candidate Name</label></div>
+
+                    <?php
+                    //get vice gov candidates
+                    $vg = 0;
+                    $vg_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor'");
+                    if (mysqli_num_rows($vg_list) > 0) {
+                        while ($v = mysqli_fetch_array($vg_list)) {
+                            $vg_id = $v['student_id'];
+                            $vg_fname = $v['first_name'];
+                            $vg_lname = $v['last_name'];
+
+                            $vg++;
+
+                    ?>
+
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
+                                <div class="form-check"><input class="form-check-input" type="radio" id="vicegov" name="vicegov" value="<?php echo $vg_id; ?>"><label class="form-check-label" for="gov-1"><?php echo $vg_fname; ?> <?php echo $vg_lname; ?></label></div>
+                            </div>
+
+                    <?php
+
+
+                        }
+                    } else {
+                        echo '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1" style="color: red;">None registered.</div>';
+                    }
+                    ?>
+
+
+                    <div class="col-lg-10 offset-lg-1" id="form_btn" style="text-align: center;">
+                        <button class="btn btn-primary" id="submit_btn" type="submit" style="margin: 10px;text-align: left;" name="submit" form="vote">submit</button>
+                        <a class="btn btn-secondary" role="button" id="back_btn" style="margin: 10px;" href="dashboard.html">back to home</a>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-0">
-                        <div class="form-check"><input class="form-check-input" type="radio" id="vicegov" name="vicegov"><label class="form-check-label" for="gov-2">Candidate Name</label></div>
-                    </div>
-                    <div class="col-lg-10 offset-lg-1" id="form_btn" style="text-align: center;"><button class="btn btn-primary" id="submit_btn" type="submit" style="margin: 10px;text-align: left;" name="submit" form="vote">submit</button><a class="btn btn-secondary" role="button" id="back_btn" style="margin: 10px;" href="dashboard.html">back to home</a></div>
                 </div>
             </form>
         </div>
