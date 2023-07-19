@@ -227,7 +227,7 @@ $student_id = $_SESSION['id'];
 
                     <div class="col-lg-10 offset-lg-1" id="form_btn" style="text-align: center;">
                         <button class="btn btn-primary" id="submit_btn" type="submit" style="margin: 10px;text-align: left;" name="submit" form="vote">submit</button>
-                        <a class="btn btn-secondary" role="button" id="back_btn" style="margin: 10px;" href="dashboard.html">back to home</a>
+                        <a class="btn btn-secondary" role="button" id="back_btn" style="margin: 10px;" href="dashboard.php">back to home</a>
                     </div>
                 </div>
             </form>
