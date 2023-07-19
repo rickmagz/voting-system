@@ -52,7 +52,7 @@ $student_id = $_SESSION['id'];
                         <hr style="border-radius: 88px;border-width: 4px;border-color: var(--bs-black);">
                     </div>
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="pres_select" style="text-align: left;">
-                        <h6 style="font-family: Muli;text-align: left;">PRESIDENT (SELECT 1)</h6>
+                        <h6 style="font-family: Muli;text-align: left; font-weight:bold;">PRESIDENT (SELECT 1)</h6>
                     </div>
 
                     <?php
@@ -80,7 +80,7 @@ $student_id = $_SESSION['id'];
                     ?>
 
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="vicepres_select">
-                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">VICE PRESIDENT (SELECT 1)</h6>
+                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px; font-weight:bold;">VICE PRESIDENT (SELECT 1)</h6>
                     </div>
 
                     <?php
@@ -106,7 +106,7 @@ $student_id = $_SESSION['id'];
                     ?>
 
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="senator_select">
-                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">SENATOR (SELECT 12)</h6>
+                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px; font-weight:bold;">SENATOR (SELECT 12)</h6>
                     </div>
 
                     <?php
@@ -135,7 +135,7 @@ $student_id = $_SESSION['id'];
                     ?>
 
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="batchrep_select">
-                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">BATCH REPRESENTATIVE (SELECT 2)</h6>
+                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px; font-weight:bold;">BATCH REPRESENTATIVE (SELECT 2)</h6>
                     </div>
 
                     <?php
@@ -164,7 +164,7 @@ $student_id = $_SESSION['id'];
                     ?>
 
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="gov_select">
-                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">GOVERNOR (SELECT 1)</h6>
+                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px; font-weight:bold;">GOVERNOR (SELECT 1)</h6>
                     </div>
 
                     <?php
@@ -194,7 +194,7 @@ $student_id = $_SESSION['id'];
                     ?>
 
                     <div class="col-lg-10 col-xl-10 offset-lg-1 offset-xl-1" id="vicegov_select">
-                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px;">VICE GOVERNOR (SELECT 1)</h6>
+                        <h6 style="font-family: Muli;text-align: left;padding-top: 25px;padding-bottom: 5px; font-weight:bold;">VICE GOVERNOR (SELECT 1)</h6>
                     </div>
 
                     <?php
