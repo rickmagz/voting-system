@@ -205,6 +205,10 @@ $total_ballot = mysqli_num_rows($ballots);
                                 </div>
                         <?php
                             }
+                        } else {
+                            echo '<div class="col-6 col-sm-3 col-md-3">
+                                      None listed at the moment.
+                                  </div>';
                         }
                         ?>
 
@@ -240,22 +244,12 @@ $total_ballot = mysqli_num_rows($ballots);
                                         </div>
                                     </div>
                                 </div>
-                            <?php
+                        <?php
                             }
                         } else {
-
-                            ?>
-                            <div class="col-6 col-sm-3 col-md-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>Candidate Name</h4>
-                                    </div>
-                                    <div class="card-body" style="text-align: center;">
-                                        <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php
+                            echo '<div class="col-6 col-sm-3 col-md-3">
+                                      None listed at the moment.
+                                  </div>';
                         }
                         ?>
 
@@ -266,16 +260,40 @@ $total_ballot = mysqli_num_rows($ballots);
                         <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Senator</h4>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
+                        <?php
+                        //get senatorial candidates
+                        $sen = 0;
+                        $get_sen = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Senator' ORDER BY last_name asc");
+                        if (mysqli_num_rows($get_sen) > 0) {
+                            while ($s = mysqli_fetch_array($get_sen)) {
+                                $id = $s['student_id'];
+                                $fname = $s['first_name'];
+                                $lname = $s['last_name'];
+                                $image = $s['image'];
+
+                                $sen++;
+
+                        ?>
+                                <div class="col-6 col-sm-3 col-md-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                        </div>
+                                        <div class="card-body" style="text-align: center;">
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
+                        <?php
+                            }
+                        } else {
+                            echo '<div class="col-6 col-sm-3 col-md-3">
+                            None listed at the moment.
+                        </div>';
+                        }
+                        ?>
+
 
                     </div>
                 </div>
@@ -284,16 +302,38 @@ $total_ballot = mysqli_num_rows($ballots);
                         <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Batch Representative</h4>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
+                        <?php
+                        //get batch representatives
+                        $brep = 0;
+                        $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' ORDER BY last_name asc");
+                        if (mysqli_num_rows($get_brep) > 0) {
+                            while ($b = mysqli_fetch_array($get_brep)) {
+                                $id = $b['student_id'];
+                                $fname = $b['first_name'];
+                                $lname = $b['last_name'];
+                                $image = $b['image'];
+
+                                $brep++;
+
+                        ?>
+                                <div class="col-6 col-sm-3 col-md-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                        </div>
+                                        <div class="card-body" style="text-align: center;">
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                            }
+                        } else {
+                            echo '<div class="col-6 col-sm-3 col-md-3">
+                            None listed at the moment.
+                        </div>';
+                        }
+                        ?>
 
                     </div>
                 </div>
@@ -302,17 +342,40 @@ $total_ballot = mysqli_num_rows($ballots);
                         <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Governor</h4>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        //get governor candidates
+                        $gov = 0;
+                        $get_gov = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' ORDER BY last_name asc");
+                        if (mysqli_num_rows($get_gov) > 0) {
+                            while ($g = mysqli_fetch_array($get_gov)) {
+                                $id = $g['student_id'];
+                                $fname = $g['first_name'];
+                                $lname = $g['last_name'];
+                                $image = $g['image'];
 
+                                $gov++;
+
+                        ?>
+                                <div class="col-6 col-sm-3 col-md-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                        </div>
+                                        <div class="card-body" style="text-align: center;">
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        <?php
+
+                            }
+                        } else {
+                            echo '<div class="col-6 col-sm-3 col-md-3">
+                    None listed at the moment.
+                </div>';
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="container" data-aos="zoom-out" data-aos-delay="200" id="vicegov" style="margin-bottom: 10px;margin-top: 10px;">
@@ -320,16 +383,40 @@ $total_ballot = mysqli_num_rows($ballots);
                         <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Vice Governor</h4>
                         </div>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Candidate Name</h4>
+                        <?php
+                        //get vice governor candidates
+                        $vgov = 0;
+                        $get_vg = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' ORDER BY last_name asc");
+                        if (mysqli_num_rows($get_vg) > 0) {
+                            while ($vg = mysqli_fetch_array($get_vg)) {
+                                $id = $vg['student_id'];
+                                $fname = $vg['first_name'];
+                                $lname = $vg['last_name'];
+                                $image = $vg['image'];
+
+                                $vgov++;
+
+                        ?>
+                                <div class="col-6 col-sm-3 col-md-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                        </div>
+                                        <div class="card-body" style="text-align: center;">
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="../assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                                </div>
-                            </div>
-                        </div>
+
+                        <?php
+
+                            }
+                        } else {
+                            echo '<div class="col-6 col-sm-3 col-md-3">
+            None listed at the moment.
+        </div>';
+                        }
+                        ?>
 
                     </div>
                 </div>
