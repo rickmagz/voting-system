@@ -55,14 +55,14 @@ if (mysqli_num_rows($get_id) > 0) {
                 " href="vote.php">VOTE NOW</a>
           </li>
           <li class="nav-item" style="padding: 8px">
-            <a class="nav-link active" style="padding: 0px" href="dashboard.php">Home</a>
+            <a class="nav-link " style="padding: 0px" href="dashboard.php">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="candidates.php">Candidates</a>
           </li>
           <li class="nav-item"></li>
           <li class="nav-item">
-            <a class="nav-link" href="myaccount.php">My Account</a>
+            <a class="nav-link active" href="myaccount.php">My Account</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="logout.php">Log out</a>
