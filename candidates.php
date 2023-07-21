@@ -1,3 +1,8 @@
+<?php
+session_start();
+include 'db.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +28,8 @@
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php">VOTE NOW</a></li>
-                    <li class="nav-item" style="padding: 8px;"><a class="nav-link active" style="padding: 0px;" href="dashboard.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="candidates.php">Candidates</a></li>
+                    <li class="nav-item" style="padding: 8px;"><a class="nav-link " style="padding: 0px;" href="dashboard.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="candidates.php">Candidates</a></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"><a class="nav-link" href="myaccount.php">My Account</a></li>
                     <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
@@ -46,46 +51,41 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                     <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">president</h4>
                 </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
+                <?php
+                //get presidential candidates
+                $ip = 0;
+                $get_pres = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='President' ORDER BY last_name asc");
+                $pres = mysqli_num_rows($get_pres);
+
+                if ($pres > 0) {
+                    while ($p = mysqli_fetch_array($get_pres)) {
+                        $id = $p['student_id'];
+                        $fname = $p['first_name'];
+                        $lname = $p['last_name'];
+                        $image = $p['image'];
+
+                        $ip++;
+                ?>
+                        <div class="col-6 col-sm-3 col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
+                                </div>
+                                <div class="card-body" style="text-align: center;">
+                                    <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" width="250px" height="250px" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    }
+                } else {
+                    echo '<div class="col-6 col-sm-3 col-md-3">
+                              None listed at the moment.
+                          </div>';
+                }
+                ?>
+
+
             </div>
         </div>
         <div class="container" data-aos="zoom-out" data-aos-delay="200" id="vicepres" style="margin-bottom: 10px;margin-top: 10px;">
@@ -93,46 +93,39 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                     <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Vice President</h4>
                 </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
+                <?php
+                //get vice presidential candidates
+                $vp = 0;
+                $get_vp = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice President' ORDER BY last_name asc");
+                $vicepres = mysqli_num_rows($get_vp);
+
+                if ($vicepres > 0) {
+                    while ($v = mysqli_fetch_array($get_vp)) {
+                        $id = $v['student_id'];
+                        $fname = $v['first_name'];
+                        $lname = $v['last_name'];
+                        $image = $v['image'];
+
+                        $vp++;
+                ?>
+                        <div class="col-6 col-sm-3 col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
+                                </div>
+                                <div class="card-body" style="text-align: center;">
+                                    <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    }
+                } else {
+                    echo '<div class="col-6 col-sm-3 col-md-3">
+                              None listed at the moment.
+                          </div>';
+                }
+                ?>
             </div>
         </div>
         <div class="container" data-aos="zoom-out" data-aos-delay="200" id="senator" style="margin-bottom: 10px;margin-top: 10px;">
@@ -140,46 +133,40 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                     <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Senator</h4>
                 </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
+                <?php
+                //get senatorial candidates
+                $sen = 0;
+                $get_sen = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Senator' ORDER BY last_name asc");
+                if (mysqli_num_rows($get_sen) > 0) {
+                    while ($s = mysqli_fetch_array($get_sen)) {
+                        $id = $s['student_id'];
+                        $fname = $s['first_name'];
+                        $lname = $s['last_name'];
+                        $image = $s['image'];
+
+                        $sen++;
+
+                ?>
+                        <div class="col-6 col-sm-3 col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                </div>
+                                <div class="card-body" style="text-align: center;">
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
+
+                <?php
+                    }
+                } else {
+                    echo '<div class="col-6 col-sm-3 col-md-3">
+                            None listed at the moment.
+                        </div>';
+                }
+                ?>
+
             </div>
         </div>
         <div class="container" data-aos="zoom-out" data-aos-delay="200" id="batchrep" style="margin-bottom: 10px;margin-top: 10px;">
@@ -187,46 +174,39 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                     <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Batch Representative</h4>
                 </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
+                <?php
+                //get batch representatives
+                $brep = 0;
+                $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' ORDER BY last_name asc");
+                if (mysqli_num_rows($get_brep) > 0) {
+                    while ($b = mysqli_fetch_array($get_brep)) {
+                        $id = $b['student_id'];
+                        $fname = $b['first_name'];
+                        $lname = $b['last_name'];
+                        $image = $b['image'];
+
+                        $brep++;
+
+                ?>
+                        <div class="col-6 col-sm-3 col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                </div>
+                                <div class="card-body" style="text-align: center;">
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    }
+                } else {
+                    echo '<div class="col-6 col-sm-3 col-md-3">
+                            None listed at the moment.
+                        </div>';
+                }
+                ?>
+
             </div>
         </div>
         <div class="container" data-aos="zoom-out" data-aos-delay="200" id="gov" style="margin-bottom: 10px;margin-top: 10px;">
@@ -234,46 +214,41 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                     <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Governor</h4>
                 </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
+                <?php
+                //get governor candidates
+                $gov = 0;
+                $get_gov = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' ORDER BY last_name asc");
+                if (mysqli_num_rows($get_gov) > 0) {
+                    while ($g = mysqli_fetch_array($get_gov)) {
+                        $id = $g['student_id'];
+                        $fname = $g['first_name'];
+                        $lname = $g['last_name'];
+                        $image = $g['image'];
+
+                        $gov++;
+
+                ?>
+                        <div class="col-6 col-sm-3 col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                </div>
+                                <div class="card-body" style="text-align: center;">
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
+
+                <?php
+
+                    }
+                } else {
+                    echo '<div class="col-6 col-sm-3 col-md-3">
+                    None listed at the moment.
+                </div>';
+                }
+                ?>
+
             </div>
         </div>
         <div class="container" data-aos="zoom-out" data-aos-delay="200" id="vicegov" style="margin-bottom: 10px;margin-top: 10px;">
@@ -281,46 +256,41 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                     <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">Vice Governor</h4>
                 </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
+                <?php
+                //get vice governor candidates
+                $vgov = 0;
+                $get_vg = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' ORDER BY last_name asc");
+                if (mysqli_num_rows($get_vg) > 0) {
+                    while ($vg = mysqli_fetch_array($get_vg)) {
+                        $id = $vg['student_id'];
+                        $fname = $vg['first_name'];
+                        $lname = $vg['last_name'];
+                        $image = $vg['image'];
+
+                        $vgov++;
+
+                ?>
+                        <div class="col-6 col-sm-3 col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Candidate Name</h4>
+                                </div>
+                                <div class="card-body" style="text-align: center;">
+                                    <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3 col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Candidate Name</h4>
-                        </div>
-                        <div class="card-body" style="text-align: center;">
-                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
-                        </div>
-                    </div>
-                </div>
+
+                <?php
+
+                    }
+                } else {
+                    echo '<div class="col-6 col-sm-3 col-md-3">
+            None listed at the moment.
+        </div>';
+                }
+                ?>
+
             </div>
         </div>
     </main>
