@@ -5,6 +5,7 @@ include 'db.php';
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
 $student_id = $_SESSION['id'];
+$council = $_SESSION['council'];
 
 ?>
 
