@@ -2,6 +2,8 @@
 session_start();
 include 'db.php';
 
+$council = $_SESSION['council'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +179,7 @@ include 'db.php';
                 <?php
                 //get batch representatives
                 $brep = 0;
-                $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' ORDER BY last_name asc");
+                $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='$council' ORDER BY last_name asc");
                 if (mysqli_num_rows($get_brep) > 0) {
                     while ($b = mysqli_fetch_array($get_brep)) {
                         $id = $b['student_id'];
@@ -217,7 +219,7 @@ include 'db.php';
                 <?php
                 //get governor candidates
                 $gov = 0;
-                $get_gov = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' ORDER BY last_name asc");
+                $get_gov = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='$council' ORDER BY last_name asc");
                 if (mysqli_num_rows($get_gov) > 0) {
                     while ($g = mysqli_fetch_array($get_gov)) {
                         $id = $g['student_id'];
@@ -259,7 +261,7 @@ include 'db.php';
                 <?php
                 //get vice governor candidates
                 $vgov = 0;
-                $get_vg = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' ORDER BY last_name asc");
+                $get_vg = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='$council' ORDER BY last_name asc");
                 if (mysqli_num_rows($get_vg) > 0) {
                     while ($vg = mysqli_fetch_array($get_vg)) {
                         $id = $vg['student_id'];
