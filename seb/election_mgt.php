@@ -47,7 +47,7 @@ include '../db.php';
                 <div>
                     <ul class="nav nav-tabs nav-justified text-start" role="tablist">
                         <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Add Candidate</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Delete Candidate Info</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">View Candidate Info</a></li>
                     </ul>
                     <div class="tab-content" style="border-top-left-radius: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
                         <div class="tab-pane fade show active" role="tabpanel" id="tab-1" style="border-top-left-radius: 0px;border: 1px solid var(--bs-gray-300);border-top-width: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
@@ -137,7 +137,7 @@ include '../db.php';
                                 $contact = $_POST['contactno'];
                                 $email = $_POST['email'];
 
-                                $check_id = mysqli_query($cxn, "SELECT * FROM candidates WHERE student_id = '$id'") or die("Error in query: $check_id." . mysqli_error($cxn));
+                                $check_id = mysqli_query($cxn, "SELECT * FROM candidate WHERE student_id = '$id'") or die("Error in query: $check_id." . mysqli_error($cxn));
 
                                 if ($check_id->num_rows == 1) {
                                     echo "<script type='text/javascript'> alert('Student ID has been registered!'); location.href = 'election_mgt.php'; </script>";
@@ -149,7 +149,7 @@ include '../db.php';
 
                                     if (in_array($fileType, $allowTypes)) {
                                         if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFileFolder)) {
-                                            $addcandidate = mysqli_query($cxn, "INSERT INTO candidates(position,student_id,first_name,last_name,council,course,major,email,contactno,image) VALUES('$position','$id','$fname','$lname','$council','$course','$major','$email','$contact','$image')") or die("Error in query: $addcandidate." . mysqli_error($cxn));
+                                            $addcandidate = mysqli_query($cxn, "INSERT INTO candidate(position,student_id,first_name,last_name,council,course,major,email,contactno,image) VALUES('$position','$id','$fname','$lname','$council','$course','$major','$email','$contact','$image')") or die("Error in query: $addcandidate." . mysqli_error($cxn));
                                         }
                                     }
                                     echo "<script type='text/javascript'> alert('Registration Successful!'); location.href = 'election_mgt.php'; </script>";
@@ -176,7 +176,7 @@ include '../db.php';
                                     <tbody>
                                         <?php
                                         $i = 0;
-                                        $candidates = mysqli_query($cxn, "SELECT * FROM candidates ORDER BY timestamp desc") or die();
+                                        $candidates = mysqli_query($cxn, "SELECT * FROM candidate ORDER BY timestamp desc") or die();
                                         $candidates_query = mysqli_num_rows($candidates);
 
                                         if ($candidates_query > 0) {
