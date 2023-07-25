@@ -273,10 +273,10 @@ include 'db.php';
                         <div class="col-6 col-sm-3 col-md-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Candidate Name</h4>
+                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="assets/img/ISAT-U-logo-shadow1.png"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
                                 </div>
                             </div>
                         </div>
