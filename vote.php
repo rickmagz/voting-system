@@ -3,6 +3,7 @@ session_start();
 include 'db.php';
 
 $student_id = $_SESSION['id'];
+$council = $_SESSION['council'];
 
 ?>
 <!DOCTYPE html>
@@ -141,7 +142,7 @@ $student_id = $_SESSION['id'];
                     <?php
                     //get batch rep candidates
                     $b = 0;
-                    $br_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative'");
+                    $br_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='$council'");
                     if (mysqli_num_rows($br_list) > 0) {
                         while ($br = mysqli_fetch_array($br_list)) {
                             $br_id = $br['student_id'];
@@ -170,7 +171,7 @@ $student_id = $_SESSION['id'];
                     <?php
                     //get governor candidates
                     $gov = 0;
-                    $gov_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor'");
+                    $gov_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor'  AND council='$council'");
                     if (mysqli_num_rows($gov_list) > 0) {
                         while ($g = mysqli_fetch_array($gov_list)) {
                             $gov_id = $g['student_id'];
@@ -200,7 +201,7 @@ $student_id = $_SESSION['id'];
                     <?php
                     //get vice gov candidates
                     $vg = 0;
-                    $vg_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor'");
+                    $vg_list = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='$council'");
                     if (mysqli_num_rows($vg_list) > 0) {
                         while ($v = mysqli_fetch_array($vg_list)) {
                             $vg_id = $v['student_id'];
