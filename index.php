@@ -21,7 +21,7 @@
             <div class="row" style="padding-top: 24px;">
                 <div class="col-lg-12 col-xl-12 col-xxl-12" style="text-align: center;margin: 0px;">
                     <div><img src="assets/img/ISAT-U-logo-shadow1.png" style="width: 150px;height: 150px;"><img src="assets/img/sr-logo.png" style="width: 150px;height: 150px;"><span style="font-size: 36px;"><br>ISATU - Miagao Campus<br>Student Republic Election<br></span></div>
-                    <h4 style="font-family: Muli;line-height: 30.8px;"><br></h4><a class="btn btn-outline-warning btn-xl" role="button" style="font-size: 12px;font-weight: bold;background: var(--bs-blue);margin: 5px;" href="register.php">Register</a><a class="btn btn-outline-warning btn-xl" role="button" href="login.php" style="font-size: 12px;font-weight: bold;background: var(--bs-green);">Start voting</a>
+                    <h4 style="font-family: Muli;line-height: 30.8px;"><br></h4><a class="btn btn-outline-warning btn-xl" role="button" style="font-size: 12px;font-weight: bold;background: var(--bs-blue);margin: 5px;" href="register.php">Register</a><a class="btn btn-outline-warning btn-xl" role="button" href="login.php" style="font-size: 12px;font-weight: bold;background: var(--bs-green);">Log in</a>
                 </div>
             </div>
         </div>

@@ -68,6 +68,7 @@ include 'db.php';
             $_SESSION['last_name'] = $l['last_name'];
             $_SESSION['username'] = $l['username'];
             $_SESSION['id'] = $l['student_id'];
+            $_SESSION['council'] = $l['council'];
             header("location: dashboard.php?=#");
         } else {
             echo '<script type="text/javascript"> alert("Invalid Credentials!")</script>';
