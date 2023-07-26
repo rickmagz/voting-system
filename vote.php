@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.php';
+require 'db.php';
 
 $student_id = $_SESSION['id'];
 $council = $_SESSION['council'];
@@ -12,7 +12,7 @@ $council = $_SESSION['council'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ISATU Voting System</title>
+    <title>Ballot - ISATU Miagao Campus Student Republic Election</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900&amp;display=swap">
@@ -42,12 +42,12 @@ $council = $_SESSION['council'];
     </nav>
     <main>
         <div class="container">
-            <form data-aos="zoom-out" id="vote" action="preview_vote.php" method="post">
+            <form data-aos="zoom-out" id="vote" action="vote.php" method="post">
                 <div class="row" style="margin: 36px;padding-top: 16px;padding-bottom: 16px;border-style: solid;">
                     <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-2 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-0 offset-xxl-4 text-end"><img class="img-fluid" src="assets/img/ISAT-U-logo-shadow1.png" width="81" height="102" style="width: 102px;height: 102px;"></div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-2 offset-0"><img class="img-fluid" src="assets/img/sr-logo.png" width="102" height="102"></div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 offset-xl-0">
-                        <h4 class="text-center" style="font-family: Lato, sans-serif;margin-bottom: 0px;padding: 0px;"><strong>ISATU Miagao Campus</strong><br><strong>Student Republic Election</strong><br><strong>OFFICIAL BALLOT</strong></h4>
+                        <h4 class="text-center" style="font-family: Lato, sans-serif;margin-bottom: 0px;padding: 0px;"><strong>ISATU Miagao Campus</strong><br><strong>Student Republic Election</strong><br><strong>OFFICIAL BALLOT</strong><br></h4>
                     </div>
                     <div class="col-xl-12" style="padding-bottom: 24px;">
                         <hr style="border-radius: 88px;border-width: 4px;border-color: var(--bs-black);">
@@ -125,7 +125,7 @@ $council = $_SESSION['council'];
                     ?>
 
                             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-lg-1 offset-xl-1">
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="sen" name="sen[]" value="<?php echo $sen_id; ?>"><label class="form-check-label" for="formCheck-9"><?php echo $sen_fname; ?> <?php echo $sen_lname; ?><br></label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="senator" name="senator[]" value="<?php echo $sen_id; ?>"><label class="form-check-label" for="formCheck-9"><?php echo $sen_fname; ?> <?php echo $sen_lname; ?><br></label></div>
                             </div>
 
                     <?php
@@ -153,7 +153,7 @@ $council = $_SESSION['council'];
                     ?>
 
                             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 offset-lg-1 offset-xl-1">
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="batchrep" name="batchrep" value="<?php echo $br_id; ?>"><label class="form-check-label" for="sen-9"><?php echo $br_fname; ?> <?php echo $br_lname; ?> </label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="batchrep" name="batchrep[]" value="<?php echo $br_id; ?>"><label class="form-check-label" for="sen-9"><?php echo $br_fname; ?> <?php echo $br_lname; ?> </label></div>
                             </div>
 
                     <?php
@@ -234,6 +234,43 @@ $council = $_SESSION['council'];
             </form>
         </div>
     </main>
+    <?php
+    //sending votes to database
+    if (isset($_POST['submit'])) {
+        $vote_pres = $_POST['pres'];
+        $vote_vp = $_POST['vicepres'];
+        $vote_sen = $_POST['senator'];
+        $vote_brep = $_POST['batchrep'];
+        $vote_gov = $_POST['gov'];
+        $vote_vicegov = $_POST['vicegov'];
+
+        $voter_id = $_SESSION['id'];
+        $voter_council = $_SESSION['council'];
+        $president_id = $vote_pres;
+        $vice_president_id = $vote_vp;
+        $senator_ids = implode(',', $vote_sen);
+        $batch_rep_ids = implode(',', $vote_brep);
+        $gov_id = $vote_gov;
+        $vicegov_id = $vote_vicegov;
+
+
+        $query = "INSERT INTO votes (student_id, council, pres, vicepres, senator, batchrep, gov, vicegov) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($cxn, $query);
+        mysqli_stmt_bind_param($stmt, "ssssssss", $voter_id, $voter_council, $president_id, $vice_president_id, $senator_ids, $batch_rep_ids, $gov_id, $vicegov_id);
+        mysqli_stmt_execute($stmt);
+
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            echo "<script>alert('Votes Recorded!'); location.href = 'dashboard.php'; </script>";
+        } else {
+            echo "Error: " . mysqli_error($cxn);
+        }
+
+        mysqli_stmt_close($stmt);
+        mysqli_close($cxn);
+    }
+    ?>
     <footer style="background: var(--bs-primary);box-shadow: 0px -2px 20px var(--bs-blue);" data-bs-spy="scroll">
         <div class="container">
             <p style="color: var(--bs-white);font-size: 16px;">©&nbsp;ISATU - Miagao Campus Student Republic Election 2023. All Rights Reserved.</p>
