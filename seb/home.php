@@ -200,7 +200,7 @@ $date = date('m/d/Y h:i:s A');
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
-                                            <span><?php echo $council;?></span>
+                                            <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" width="250px" height="250px" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -243,7 +243,7 @@ $date = date('m/d/Y h:i:s A');
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
-                                            <span><?php echo $council;?></span>
+                                            <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -285,7 +285,7 @@ $date = date('m/d/Y h:i:s A');
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                            <span><?php echo $council;?></span>
+                                            <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -329,7 +329,7 @@ $date = date('m/d/Y h:i:s A');
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                            <span><?php echo $council;?></span>
+                                            <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -371,7 +371,7 @@ $date = date('m/d/Y h:i:s A');
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                            <span><?php echo $council;?></span>
+                                            <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -414,7 +414,7 @@ $date = date('m/d/Y h:i:s A');
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                            <span><?php echo $council;?></span>
+                                            <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -436,6 +436,9 @@ $date = date('m/d/Y h:i:s A');
                 </div>
             </div>
         </div>
+
+        <?php include './includes/count_votes.php'; ?>
+
         <div class="row" id="tally" style="margin-bottom: 12px;margin-top: 12px;margin-right: 24px;margin-left: 24px;">
             <div class="col-lg-12" data-aos="fade" id="tally-header">
                 <div class="container" style="padding: 0px;">
@@ -466,18 +469,27 @@ $date = date('m/d/Y h:i:s A');
                             $get_pres = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='President' ORDER BY last_name asc");
                             $pres = mysqli_num_rows($get_pres);
 
+
+
                             if ($pres > 0) {
                                 while ($p = mysqli_fetch_array($get_pres)) {
                                     $fname = $p['first_name'];
                                     $lname = $p['last_name'];
+
+                                    // Get candidate ID to access vote count from the $pres_votes array
+                                    $candidate_id = $p['student_id'];
+
+                                    // Access the vote count for the current candidate from the $pres_votes array
+                                    $vote_count = isset($pres_votes[$candidate_id]) ? $pres_votes[$candidate_id] : 0;
 
 
                                     $ip++;
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
+
                             <?php
                                 }
                             } else {
@@ -516,11 +528,17 @@ $date = date('m/d/Y h:i:s A');
                                     $fname = $v['first_name'];
                                     $lname = $v['last_name'];
 
+                                    // Get candidate ID to access vote count from the $vicepres_votes array
+                                    $candidate_id = $v['student_id'];
+
+                                    // Access the vote count for the current candidate from the $vicepres_votes array
+                                    $vote_count = isset($vp_votes[$candidate_id]) ? $vp_votes[$candidate_id] : 0;
+
                                     $vp++;
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -558,13 +576,19 @@ $date = date('m/d/Y h:i:s A');
                                     $fname = $s['first_name'];
                                     $lname = $s['last_name'];
 
+                                    // Get candidate ID to access vote count from the $sen_votes array
+                                    $candidate_id = $s['student_id'];
+
+                                    // Access the vote count for the current candidate from the $sen_votes array
+                                    $vote_count = isset($sen_votes[$candidate_id]) ? $sen_votes[$candidate_id] : 0;
+
 
                                     $sen++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -604,12 +628,18 @@ $date = date('m/d/Y h:i:s A');
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
                                     $brep++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -647,12 +677,18 @@ $date = date('m/d/Y h:i:s A');
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
                                     $brep++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -690,12 +726,18 @@ $date = date('m/d/Y h:i:s A');
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
                                     $brep++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -733,12 +775,18 @@ $date = date('m/d/Y h:i:s A');
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
                                     $brep++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -769,19 +817,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get governors
-                            $brep = 0;
+                            $gov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='Computer Studies' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
-                                while ($b = mysqli_fetch_array($get_brep)) {
-                                    $fname = $b['first_name'];
-                                    $lname = $b['last_name'];
+                                while ($g = mysqli_fetch_array($get_brep)) {
+                                    $fname = $g['first_name'];
+                                    $lname = $g['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $g['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -812,19 +866,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get vice governors
-                            $brep = 0;
+                            $vgov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='Computer Studies' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -856,19 +916,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get governors
-                            $brep = 0;
+                            $gov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='Education' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -899,19 +965,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get vice governors
-                            $brep = 0;
+                            $vgov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='Education' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -942,19 +1014,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get governors
-                            $brep = 0;
+                            $gov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='HBM' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -985,19 +1063,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get vice governors
-                            $brep = 0;
+                            $vgov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='HBM' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -1028,19 +1112,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get governors
-                            $brep = 0;
+                            $gov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='BIT' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
@@ -1071,19 +1161,25 @@ $date = date('m/d/Y h:i:s A');
                         <tbody>
                             <?php
                             //get governors
-                            $brep = 0;
+                            $vgov = 0;
                             $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='BIT' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
                                     $lname = $b['last_name'];
 
-                                    $brep++;
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
 
                             ?>
                                     <tr>
                                         <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
-                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
                                     </tr>
                             <?php
                                 }
