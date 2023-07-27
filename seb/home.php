@@ -42,7 +42,9 @@ $hbm_ballots = mysqli_num_rows($hbmgt);
 $ballots = mysqli_query($cxn, "SELECT council from votes");
 $total_ballot = mysqli_num_rows($ballots);
 
-
+//latest update of tally of votes
+date_default_timezone_set("Asia/Manila");
+$date = date('m/d/Y h:i:s A');
 
 
 ?>
@@ -190,6 +192,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                 $lname = $p['last_name'];
                                 $position = $p['position'];
                                 $image = $p['image'];
+                                $council = $p['council'];
 
                                 $ip++;
                         ?>
@@ -197,6 +200,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
+                                            <span><?php echo $council;?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" width="250px" height="250px" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -231,6 +235,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                 $lname = $v['last_name'];
                                 $position = $v['position'];
                                 $image = $v['image'];
+                                $council = $v['council'];
 
                                 $vp++;
                         ?>
@@ -238,6 +243,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
+                                            <span><?php echo $council;?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -270,6 +276,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                 $fname = $s['first_name'];
                                 $lname = $s['last_name'];
                                 $image = $s['image'];
+                                $council = $s['council'];
 
                                 $sen++;
 
@@ -278,6 +285,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                            <span><?php echo $council;?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -312,6 +320,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                 $fname = $b['first_name'];
                                 $lname = $b['last_name'];
                                 $image = $b['image'];
+                                $council = $b['council'];
 
                                 $brep++;
 
@@ -320,6 +329,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                            <span><?php echo $council;?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -352,6 +362,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                 $fname = $g['first_name'];
                                 $lname = $g['last_name'];
                                 $image = $g['image'];
+                                $council = $g['council'];
 
                                 $gov++;
 
@@ -360,6 +371,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                            <span><?php echo $council;?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -393,6 +405,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                 $fname = $vg['first_name'];
                                 $lname = $vg['last_name'];
                                 $image = $vg['image'];
+                                $council = $vg['council'];
 
                                 $vgov++;
 
@@ -401,6 +414,7 @@ $total_ballot = mysqli_num_rows($ballots);
                                     <div class="card">
                                         <div class="card-header">
                                             <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
+                                            <span><?php echo $council;?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
                                             <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
@@ -429,7 +443,7 @@ $total_ballot = mysqli_num_rows($ballots);
                         <div class="container">
                             <div class="pb-2 pb-lg-1">
                                 <h3 class="fw-bold mb-2" style="text-align: center;">Tally of Votes</h3>
-                                <p class="mb-0" style="text-align: center;">Last Update: (time)</p>
+                                <p class="mb-0" style="text-align: center;">Last Update: <?php echo $date; ?></p>
                             </div>
                         </div>
                     </section>
@@ -442,18 +456,36 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get presidential candidates
+                            $ip = 0;
+                            $get_pres = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='President' ORDER BY last_name asc");
+                            $pres = mysqli_num_rows($get_pres);
+
+                            if ($pres > 0) {
+                                while ($p = mysqli_fetch_array($get_pres)) {
+                                    $fname = $p['first_name'];
+                                    $lname = $p['last_name'];
+
+
+                                    $ip++;
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -469,18 +501,35 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice presidential candidates
+                            $vp = 0;
+                            $get_vp = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice President' ORDER BY last_name asc");
+                            $vicepres = mysqli_num_rows($get_vp);
+
+                            if ($vicepres > 0) {
+                                while ($v = mysqli_fetch_array($get_vp)) {
+                                    $fname = $v['first_name'];
+                                    $lname = $v['last_name'];
+
+                                    $vp++;
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -496,18 +545,37 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-white);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-white);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get senatorial candidates
+                            $sen = 0;
+                            $get_sen = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Senator' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_sen) > 0) {
+                                while ($s = mysqli_fetch_array($get_sen)) {
+                                    $fname = $s['first_name'];
+                                    $lname = $s['last_name'];
+
+
+                                    $sen++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
+
+
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -523,18 +591,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='Computer Studies' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -550,18 +634,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='Education' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td  colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -577,18 +677,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='HBM' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -604,18 +720,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='BIT' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -631,18 +763,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='Computer Studies' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -658,18 +806,35 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='Computer Studies' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
+
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -685,18 +850,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='Education' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -712,18 +893,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='Education' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -739,18 +936,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='HBM' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -766,18 +979,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='HBM' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -793,18 +1022,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='BIT' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -820,18 +1065,34 @@ $total_ballot = mysqli_num_rows($ballots);
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='BIT' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);">(Number of votes)</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
