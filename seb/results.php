@@ -1,5 +1,10 @@
 <?php
 session_start();
+require '../db.php';
+
+//latest update of tally of votes
+date_default_timezone_set("Asia/Manila");
+$date = date('m/d/Y h:i:s A');
 
 ?>
 <!DOCTYPE html>
@@ -8,7 +13,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ISATU Voting System</title>
+    <title>Election Results - ISATU Miagao Campus Student Republic Election - SEC Dashboard</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900&amp;display=swap">
@@ -43,15 +48,18 @@ session_start();
             </div>
         </div>
     </nav>
-    <main style="margin-bottom: 300px;">
-        <div class="row" id="tally" style="margin-bottom: 12px;margin-top: 80px;margin-right: 24px;margin-left: 24px;">
+
+    <?php include './includes/count_votes.php'; ?>
+
+    <main style="margin: 25px;margin-bottom: 70px;">
+        <div class="row" id="tally" style="margin-top: 128px;margin-right: 24px;margin-left: 24px;">
             <div class="col-lg-12" data-aos="fade" id="tally-header">
                 <div class="container" style="padding: 0px;">
                     <section style="padding: 12px;padding-top: 12px;margin: 24px;">
                         <div class="container">
                             <div class="pb-2 pb-lg-1">
-                                <h3 class="fw-bold mb-2" style="text-align: center;">Unofficial Tally of Votes</h3>
-                                <p class="mb-0" style="text-align: center;">Last Update: (time)</p>
+                                <h3 class="fw-bold mb-2" style="text-align: center;">Tally of Votes</h3>
+                                <p class="mb-0" style="text-align: center;">Last Update: <?php echo $date; ?></p>
                             </div>
                         </div>
                     </section>
@@ -64,18 +72,45 @@ session_start();
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get presidential candidates
+                            $ip = 0;
+                            $get_pres = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='President' ORDER BY last_name asc");
+                            $pres = mysqli_num_rows($get_pres);
+
+
+
+                            if ($pres > 0) {
+                                while ($p = mysqli_fetch_array($get_pres)) {
+                                    $fname = $p['first_name'];
+                                    $lname = $p['last_name'];
+
+                                    // Get candidate ID to access vote count from the $pres_votes array
+                                    $candidate_id = $p['student_id'];
+
+                                    // Access the vote count for the current candidate from the $pres_votes array
+                                    $vote_count = isset($pres_votes[$candidate_id]) ? $pres_votes[$candidate_id] : 0;
+
+
+                                    $ip++;
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -91,18 +126,41 @@ session_start();
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice presidential candidates
+                            $vp = 0;
+                            $get_vp = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice President' ORDER BY last_name asc");
+                            $vicepres = mysqli_num_rows($get_vp);
+
+                            if ($vicepres > 0) {
+                                while ($v = mysqli_fetch_array($get_vp)) {
+                                    $fname = $v['first_name'];
+                                    $lname = $v['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicepres_votes array
+                                    $candidate_id = $v['student_id'];
+
+                                    // Access the vote count for the current candidate from the $vicepres_votes array
+                                    $vote_count = isset($vp_votes[$candidate_id]) ? $vp_votes[$candidate_id] : 0;
+
+                                    $vp++;
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -117,19 +175,44 @@ session_start();
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
-                                <th style="background: var(--bs-white);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-white);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
+                                <th style="background: var(--bs-white);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get senatorial candidates
+                            $sen = 0;
+                            $get_sen = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Senator' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_sen) > 0) {
+                                while ($s = mysqli_fetch_array($get_sen)) {
+                                    $fname = $s['first_name'];
+                                    $lname = $s['last_name'];
+
+                                    // Get candidate ID to access vote count from the $sen_votes array
+                                    $candidate_id = $s['student_id'];
+
+                                    // Access the vote count for the current candidate from the $sen_votes array
+                                    $vote_count = isset($sen_votes[$candidate_id]) ? $sen_votes[$candidate_id] : 0;
+
+
+                                    $sen++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
+
+
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -138,25 +221,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Computer Studies)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='Computer Studies' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -165,25 +270,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Education)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='Education' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td  colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -192,25 +319,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Hotel &amp; Business Mgt.)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='HBM' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -219,25 +368,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Industrial Technology)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get batch representatives
+                            $brep = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='BIT' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($brep_votes[$candidate_id]) ? $brep_votes[$candidate_id] : 0;
+
+                                    $brep++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -246,25 +417,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>GOVERNOR (Computer Studies)</strong><br></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $gov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='Computer Studies' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($g = mysqli_fetch_array($get_brep)) {
+                                    $fname = $g['first_name'];
+                                    $lname = $g['last_name'];
+
+                                    // Get candidate ID to access vote count from the $batchrep_votes array
+                                    $candidate_id = $g['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -273,25 +466,48 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>VICE GOVERNOR (Computer Studies)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice governors
+                            $vgov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='Computer Studies' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
+
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -300,25 +516,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>GOVERNOR (Education)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $gov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='Education' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -327,25 +565,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>VICE GOVERNOR (Education)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice governors
+                            $vgov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='Education' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -354,25 +614,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>GOVERNOR (Hotel &amp;</strong>&nbsp;<strong>Business Mgt.)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $gov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='HBM' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -381,25 +663,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>VICE GOVERNOR (Hotel &amp;</strong>&nbsp;<strong>Business Mgt.)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get vice governors
+                            $vgov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='HBM' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -408,25 +712,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>GOVERNOR (Industrial Technology)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $gov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='BIT' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($gov_votes[$candidate_id]) ? $gov_votes[$candidate_id] : 0;
+
+                                    $gov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
@@ -435,25 +761,47 @@ session_start();
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
                 <p class="fs-5"><strong>VICE GOVERNOR (Industrial Technology)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">% of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 1</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
-                            <tr>
-                                <td style="background: var(--bs-white);">Cell 3</td>
-                                <td style="background: var(--bs-white);">-</td>
-                            </tr>
+                            <?php
+                            //get governors
+                            $vgov = 0;
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='BIT' ORDER BY last_name asc");
+                            if (mysqli_num_rows($get_brep) > 0) {
+                                while ($b = mysqli_fetch_array($get_brep)) {
+                                    $fname = $b['first_name'];
+                                    $lname = $b['last_name'];
+
+                                    // Get candidate ID to access vote count from the $vicegov_votes array
+                                    $candidate_id = $b['student_id'];
+
+                                    // Access the vote count for the current candidate from the $batchrep_votes array
+                                    $vote_count = isset($vicegov_votes[$candidate_id]) ? $vicegov_votes[$candidate_id] : 0;
+
+                                    $vgov++;
+
+                            ?>
+                                    <tr>
+                                        <td style="background: var(--bs-white);"><?php echo $lname; ?> <?php echo $fname; ?></td>
+                                        <td style="background: var(--bs-white);"><?php echo $vote_count; ?> votes</td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo '<td colspan="2" style="background: var(--bs-white);">
+                              None listed at the moment.
+                          </td>';
+                            }
+                            ?>
                             <tr>
                                 <td style="text-align: right;background: var(--bs-gray-500);"></td>
                                 <td style="background: var(--bs-yellow);">-</td>
