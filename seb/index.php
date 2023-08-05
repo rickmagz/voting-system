@@ -56,6 +56,7 @@ include '../db.php';
                     <button class="btn btn-primary d-block w-100" type="submit" name="login" form="login">
                       Login
                     </button>
+                    <a class="btn btn-secondary d-block w-100" href="../login.php">Log in as student</a>
                   </div>
                 </div>
                 <p class="text-muted">
