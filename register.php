@@ -192,6 +192,7 @@ include 'db.php';
       </p>
       <ul class="list-inline">
         <li class="list-inline-item">
+          <a href="index.php" style="color: var(--bs-blue); text-decoration: none">Back to Home</a>
           <a href="seb/index.php" style="color: var(--bs-blue); text-decoration: none">Admin</a>
         </li>
       </ul>
@@ -212,21 +213,21 @@ include 'db.php';
       course.innerHTML = "";
 
       if (councilname == "Education") {
-        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option>Select Course</option>";
         course.innerHTML += "<option value='BEED'>Elementary Education</option>";
         course.innerHTML += "<option value='BSED'>Secondary Education</option>";
         course.innerHTML += "<option value='BTVTED'>Technical-Vocational Teacher Education</option>";
         course.innerHTML += "<option value='BTLED'>Technology and Livelihood Education</option>";
       } else if (councilname == "BIT") {
-        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option>Select Course</option>";
         course.innerHTML += "<option value='BIT'>Bachelor in Industrial Technology</option>";
       } else if (councilname == "HBM") {
-        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option>Select Course</option>";
         course.innerHTML += "<option value='Hospitality Management'>Hospitality Management</option>";
         course.innerHTML += "<option value='Tourism Management'>Tourism Management</option>";
         course.innerHTML += "<option value='Entrepreneurship'>Entrepreneurship</option>";
       } else if (councilname == "Computer Studies") {
-        course.innerHTML += "<option disabled>Select Course</option>";
+        course.innerHTML += "<option>Select Course</option>";
         course.innerHTML += "<option value='Information Technology'>Information Technology</option>";
         course.innerHTML += "<option value='Information Systems'>Information Systems</option>";
       }
@@ -240,14 +241,14 @@ include 'db.php';
       major.innerHTML = "";
 
       if (coursename == "BSED") {
-        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option>Select Major</option>";
         major.innerHTML += "<option value='English'>English</option>";
         major.innerHTML += "<option value='Filipino'>Filipino</option>";
         major.innerHTML += "<option value='Mathematics'>Mathematics</option>";
         major.innerHTML += "<option value='Science'>Science</option>";
         major.innerHTML += "<option value='Social Studies'>Social Studies</option>";
       } else if (coursename == "BTVTED") {
-        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option>Select Major</option>";
         major.innerHTML += "<option value='Automotive Technology'>Automotive Technology</option>";
         major.innerHTML += "<option value='Electrical Technology'>Electrical Technology</option>";
         major.innerHTML += "<option value='Food Service Management'>Food Service Management</option>";
@@ -255,11 +256,11 @@ include 'db.php';
         major.innerHTML += "<option value='Electronics Technology'>Electronics Technology</option>";
         major.innerHTML += "<option value='Garments, Fashion and Design'>Garments, Fashion and Design</option>";
       } else if (coursename == "BTLED") {
-        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option>Select Major</option>";
         major.innerHTML += "<option value='Home Economics'>Home Economics</option>";
         major.innerHTML += "<option value='Industrial Arts'>Industrial Arts</option>";
       } else if (coursename == "BIT") {
-        major.innerHTML += "<option disabled>Select Major</option>";
+        major.innerHTML += "<option>Select Major</option>";
         major.innerHTML += "<option value='Architectural Drafting Technology'>Architectural Drafting Technology</option>";
         major.innerHTML += "<option value='Cosmetology'>Cosmetology</option>";
         major.innerHTML += "<option value='Electronics Technology'>Electronics Technology</option>";
