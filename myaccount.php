@@ -47,12 +47,18 @@ if (mysqli_num_rows($get_id) > 0) {
       <div class="collapse navbar-collapse" id="navcol-2">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" style="
-                  background: var(--bs-blue);
-                  border-radius: 10px;
-                  color: var(--bs-gray-100);
-                  font-weight: bold;
-                " href="vote.php">VOTE NOW</a>
+            <?php
+            $voted = mysqli_query($cxn, "SELECT * FROM votes WHERE student_id='$student_id'") or die();
+            $if_voted = mysqli_num_rows($voted);
+            if ($if_voted == 1) {
+              $vote_btn = '<a class="nav-link disabled" style="background: var(--bs-red);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php" >VOTED!</a>';
+            } else {
+              $vote_btn = '<a class="nav-link btn btn-primary btn-lg" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php">VOTE NOW</a>';
+            }
+
+            echo $vote_btn;
+            ?>
+
           </li>
           <li class="nav-item" style="padding: 8px">
             <a class="nav-link " style="padding: 0px" href="dashboard.php">Home</a>

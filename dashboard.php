@@ -33,13 +33,32 @@ $council = $_SESSION['council'];
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img src="assets/img/ISAT-U-logo-shadow1.png" width="50px" height="50px"><img src="assets/img/sr-logo.png" width="50px" height="50px"><span style="margin-left: 9px;font-family: Muli;color: var(--bs-blue);font-weight: bold;">ISATU Miagao Campus <br>Student Republic Election</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php">VOTE NOW</a></li>
-                    <li class="nav-item" style="padding: 8px;"><a class="nav-link active" style="padding: 0px;" href="dashboard.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="candidates.php">Candidates</a></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" href="myaccount.php">My Account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
-                    <li class="nav-item"></li>
+                    <li class="nav-item">
+                        <?php
+                        $voted = mysqli_query($cxn, "SELECT * FROM votes WHERE student_id='$student_id'") or die();
+                        $if_voted = mysqli_num_rows($voted);
+                        if ($if_voted == 1) {
+                            $vote_btn = '<a class="nav-link disabled" style="background: var(--bs-red);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php" >VOTED!</a>';
+                        } else {
+                            $vote_btn = '<a class="nav-link btn btn-primary btn-lg" style="background: var(--bs-blue);border-radius: 10px;color: var(--bs-gray-100);font-weight: bold;" href="vote.php">VOTE NOW</a>';
+                        }
+
+                        echo $vote_btn;
+                        ?>
+
+                    </li>
+                    <li class="nav-item" style="padding: 8px;">
+                        <a class="nav-link active" style="padding: 0px;" href="dashboard.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="candidates.php">Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="myaccount.php">My Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Log out</a>
+                    </li>
                 </ul>
             </div>
         </div>
