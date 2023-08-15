@@ -10,7 +10,7 @@ $get_id = mysqli_query($cxn, "SELECT * FROM student WHERE student_id='$student_i
 
 if (mysqli_num_rows($get_id) > 0) {
   $i = mysqli_fetch_assoc($get_id);
-  $_SESSION['link_id'] = $i['id'];
+  $link_id = $i['id'];
 }
 
 ?>
@@ -127,16 +127,23 @@ if (mysqli_num_rows($get_id) > 0) {
                     ?>
                     (<?php echo $if_cand; ?>)
                   </h3>
-                  <span style="font-size: 21px">Student ID: <?php echo $student_id; ?> <br /></span><a class="btn btn-primary" type="button" style="
-                        font-family: Muli;
-                        font-size: 14px;
-                        border-width: 1px;
-                        margin-top: 10px;
-                        font-weight: bold;
-                        padding-right: 30px;
-                        padding-left: 30px;
-                        text-align: center;
-                      " href="editprofile.php?id=<?php echo $_SESSION['link_id']; ?>" target="_self">edit profile</a>
+                  <span style="font-size: 21px">Student ID: <?php echo $student_id; ?> <br /></span>
+                  <a class="btn btn-primary" type="button" style="font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;" href="editprofile.php?id=<?php echo $link_id; ?>" target="_self">edit profile</a>
+
+                  <?php
+                  $second_btn = mysqli_query($cxn, "SELECT * FROM candidates WHERE student_id='$student_id'") or die($cxn);
+                  if (mysqli_num_rows($second_btn) == 1) {
+                    $btn_link = "<a class='btn btn-secondary' type='button' style='font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;' href='cancel_candidacy.php?id=$student_id' target='_self'>Cancel candidacy</a>";
+                  } else {
+                    $btn_link = "<a class='btn btn-secondary' type='button' style='font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;' href='file_candidacy.php?id=$student_id' target='_blank'>File for candidacy</a>";
+                  }
+
+                  echo $btn_link;
+
+                  ?>
+                  <!-- <a class="btn btn-secondary" type="button" style="font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;" href="editprofile.php?id=<?php echo $_SESSION['link_id']; ?>" target="_self">edit profile</a> -->
+
+
                 </div>
               </div>
               <?php
@@ -153,26 +160,23 @@ if (mysqli_num_rows($get_id) > 0) {
                 $year = $a['year'];
                 $section = $a['section'];
               }
+
+              $get_position = mysqli_query($cxn, "SELECT * FROM candidates WHERE student_id='$student_id'") or die($cxn);
+
+              if (mysqli_num_rows($get_position) == 1) {
+                $p = mysqli_fetch_assoc($get_position);
+                $pos = $p['position'];
+              } else {
+                $pos = "None";
+              }
               ?>
-              <div class="row" style="
-                    margin-top: 35px;
-                    background: #eff3f8;
-                    border-radius: 10px;
-                    margin-right: 10px;
-                    margin-left: 10px;
-                    padding: 7px;
-                    padding-top: 10px;
-                    padding-bottom: 10px;
-                  ">
+              <div class="row" style="margin-top: 35px; background: #eff3f8; border-radius: 10px; margin-right: 10px; margin-left: 10px; padding: 7px; padding-top: 10px; padding-bottom: 10px;">
                 <div class="col-xl-12" id="council">
-                  <h5 style="
-                        font-weight: bold;
-                        font-family: Muli;
-                        color: var(--bs-black);
-                        padding-bottom: 0px;
-                      ">
-                    Council
-                  </h5>
+                  <h5 style="font-weight: bold; font-family: Muli; color: var(--bs-black);padding-bottom: 0px;">Running Position</h5>
+                  <span style="font-size: 21px"><?php echo $pos; ?></span>
+                </div>
+                <div class="col-xl-12" id="council">
+                  <h5 style="font-weight: bold; font-family: Muli; color: var(--bs-black);padding-bottom: 0px; margin-top: 14px">Council</h5>
                   <span style="font-size: 21px"><?php echo $council; ?></span>
                 </div>
                 <div class="col-xl-12" id="course" style="padding-top: 10px; margin-top: 14px">
