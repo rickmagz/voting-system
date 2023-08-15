@@ -51,118 +51,65 @@ include '../db.php';
                 <hr>
                 <div>
                     <ul class="nav nav-tabs nav-justified text-start" role="tablist">
-                        <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Add Candidate</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Filing History</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">View Candidate Info</a></li>
                     </ul>
                     <div class="tab-content" style="border-top-left-radius: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
                         <div class="tab-pane fade show active" role="tabpanel" id="tab-1" style="border-top-left-radius: 0px;border: 1px solid var(--bs-gray-300);border-top-width: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
-                            <form id="addcandidate" action="election_mgt.php" method="post" name="addcandidate" style="border-top-width: 1px;border-top-style: none;" enctype="multipart/form-data">
+                            <div class="container" style="margin-top: 20px;">
                                 <div class="row">
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-md-1 offset-lg-1 offset-xl-1" style="padding-bottom: 12px;padding-top: 12px;">
-                                        <label class="form-label" style="margin: 0px;">Select Position</label>
-                                        <select class="form-select form-select-sm" name="position" autofocus="" required="" style="margin-left: 0px;">
-                                            <optgroup label="Select Position">
-                                                <option value="President">President</option>
-                                                <option value="Vice President">Vice President</option>
-                                                <option value="Senator">Senator</option>
-                                                <option value="Batch Representative">Batch Representative</option>
-                                                <option value="Governor">Governor</option>
-                                                <option value="Vice Governor">Vice Governor</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-xl-0" style="padding-bottom: 12px;padding-top: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Upload Photo</label>
-                                        <input class="form-control form-control-sm" type="file" name="image" required="">
-                                    </div>
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Student ID</label>
-                                        <input class="form-control form-control-sm" type="text" name="id" placeholder="Enter Student ID" required="">
-                                    </div>
+                                    <div class="col">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead style="background: var(--bs-blue);color: var(--bs-white);">
+                                                    <tr>
+                                                        <th>Name of Candidate</th>
+                                                        <th>Position</th>
+                                                        <th>Council</th>
+                                                        <th>Filing Date</th>
 
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-xl-0" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Council</label>
-                                        <select class="form-select form-select-sm" name="council" id="council" autofocus="" required="" style="margin-left: 0px;">
-                                            <option selected disabled>Select Council</option>
-                                            <option value="Education">Education</option>
-                                            <option value="BIT">B.I.T.</option>
-                                            <option value="HBM">H.B.M.</option>
-                                            <option value="Computer Studies">Computer Studies</option>
-                                        </select>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $i = 0;
+                                                    $candidates = mysqli_query($cxn, "SELECT * FROM candidates ORDER BY timestamp desc") or die();
+                                                    $candidates_query = mysqli_num_rows($candidates);
+
+                                                    if ($candidates_query > 0) {
+                                                        while ($c = mysqli_fetch_array($candidates)) {
+                                                            $cand_sid = $c['student_id'];
+                                                            $fname = $c['first_name'];
+                                                            $lname = $c['last_name'];
+                                                            $position = $c['position'];
+                                                            $council = $c['council'];
+                                                            $date = $c['timestamp'];
+
+
+
+                                                            $i++;
+
+                                                    ?>
+                                                            <tr class="candidate<?php echo $cand_id; ?>">
+                                                                <td><?php echo $fname; ?> <?php echo $lname; ?></td>
+                                                                <td><?php echo $position; ?></td>
+                                                                <td><?php echo $council; ?></td>
+                                                                <td><?php echo $date; ?></td>
+                                                            </tr>
+                                                    <?php
+                                                        }
+                                                    } else {
+                                                        echo "<tr>
+                                                    <td colspan='7'>No record found.</td>
+                                                    </tr>";
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Course</label>
-                                        <select class="form-select form-select-sm" id="course" name="course" autofocus required style="margin-left: 0px;">
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-xl-0" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Major</label>
-                                        <select class="form-select form-select-sm" id="major" name="major" autofocus required style="margin-left: 0px;">
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">First Name</label>
-                                        <input class="form-control form-control-sm" type="text" name="first_name" placeholder="Enter First Name" required="">
-                                    </div>
-
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-xl-0" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Last Name</label>
-                                        <input class="form-control form-control-sm" type="text" name="last_name" placeholder="Enter Last Name" required="">
-                                    </div>
-
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-md-1 offset-lg-1 offset-xl-1" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Contact Number</label>
-                                        <input class="form-control form-control-sm" type="text" name="contactno" placeholder="Enter Contact No." required="">
-                                    </div>
-
-                                    <div class="col-md-5 col-lg-5 col-xl-5 offset-xl-0" style="padding-top: 12px;padding-bottom: 12px;">
-                                        <label class="form-label" style="margin: 0px;padding: 0px;">Email Address</label>
-                                        <input class="form-control form-control-sm" type="text" name="email" placeholder="Enter E-mail Address" required="" inputmode="email">
-                                    </div>
-
-                                    <div class="col-md-10 col-lg-10 col-xl-5 offset-md-1 offset-lg-1 offset-xl-1 align-self-center" style="margin-bottom: 12px;"><button class="btn btn-primary btn-sm" id="addcandidate" type="submit" form="addcandidate" name="addcandidate" style="border-radius: 10px;">ADD CANDIDATE</button><button class="btn btn-secondary btn-sm" type="reset" style="border-radius: 10px;">cLEAR</button></div>
                                 </div>
-                            </form>
-                            <?php
-                            $upload_folder = "../uploads/";
-
-                            if (isset($_POST['addcandidate'])) {
-                                $position = $_POST['position'];
-                                $id = $_POST['id'];
-                                $council = $_POST['council'];
-                                $course = $_POST['course'];
-                                $major = $_POST['major'];
-                                $fname = $_POST['first_name'];
-                                $lname = $_POST['last_name'];
-                                $contact = $_POST['contactno'];
-                                $email = $_POST['email'];
-
-                                $check_id = mysqli_query($cxn, "SELECT * FROM candidates WHERE student_id = '$id'") or die("Error in query: $check_id." . mysqli_error($cxn));
-
-                                if ($check_id->num_rows == 1) {
-                                    echo "<script type='text/javascript'> alert('Student ID has been registered!'); location.href = 'election_mgt.php'; </script>";
-                                } else {
-                                    $image = basename($_FILES["image"]["name"]);
-                                    $targetFileFolder = $upload_folder . $image;
-                                    $fileType = pathinfo($targetFileFolder, PATHINFO_EXTENSION);
-                                    $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
-
-                                    if (in_array($fileType, $allowTypes)) {
-                                        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFileFolder)) {
-                                            $addcandidate = mysqli_query($cxn, "INSERT INTO candidates(position,student_id,first_name,last_name,council,course,major,email,contactno,image) VALUES('$position','$id','$fname','$lname','$council','$course','$major','$email','$contact','$image')") or die("Error in query: $addcandidate." . mysqli_error($cxn));
-                                        }
-                                    }
-                                    echo "<script type='text/javascript'> alert('Registration Successful!'); location.href = 'election_mgt.php'; </script>";
-                                }
-                            }
-
-
-                            ?>
+                            </div>
                         </div>
                         <div class="tab-pane fade" role="tabpanel" id="tab-2" style="border-top-left-radius: 0px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;border: 1px solid var(--bs-gray-300);border-top-width: 0px;padding: 12px;">
                             <div class="table-responsive-lg text-center d-xl-flex">
@@ -233,6 +180,7 @@ include '../db.php';
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/bs-init.js"></script>
     <script src="../assets/js/new-age.js"></script>
@@ -312,6 +260,7 @@ include '../db.php';
 
         course.addEventListener("change", majorOptions);
     </script>
+
 </body>
 
 </html>
