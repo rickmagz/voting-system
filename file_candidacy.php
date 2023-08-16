@@ -166,7 +166,7 @@ if (isset($_REQUEST['id'])) {
             }
         }
 
-        echo "<script type='text/javascript'> alert('Candidacy File Submitted!'); window.close(); </script>";
+        echo "<script type='text/javascript'> alert('Candidacy File Submitted!'); location.href='myaccount.php'; </script>";
     }
     ?>
 
