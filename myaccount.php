@@ -10,7 +10,7 @@ $get_id = mysqli_query($cxn, "SELECT * FROM student WHERE student_id='$student_i
 
 if (mysqli_num_rows($get_id) > 0) {
   $i = mysqli_fetch_assoc($get_id);
-  $link_id = $i['id'];
+  $_SESSION['link_id'] = $i['id'];
 }
 
 ?>
@@ -128,14 +128,14 @@ if (mysqli_num_rows($get_id) > 0) {
                     (<?php echo $if_cand; ?>)
                   </h3>
                   <span style="font-size: 21px">Student ID: <?php echo $student_id; ?> <br /></span>
-                  <a class="btn btn-primary" type="button" style="font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;" href="editprofile.php?id=<?php echo $link_id; ?>" target="_self">edit profile</a>
+                  <a class="btn btn-primary" type="button" style="font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;" href="editprofile.php?id=<?php echo $_SESSION['link_id']; ?>" target="_self">edit profile</a>
 
                   <?php
                   $second_btn = mysqli_query($cxn, "SELECT * FROM candidates WHERE student_id='$student_id'") or die($cxn);
                   if (mysqli_num_rows($second_btn) == 1) {
                     $btn_link = "<a class='btn btn-secondary' type='button' style='font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;' href='cancel_candidacy.php?id=$student_id' target='_self'>Cancel candidacy</a>";
                   } else {
-                    $btn_link = "<a class='btn btn-secondary' type='button' style='font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;' href='file_candidacy.php?id=$student_id' target='_blank'>File for candidacy</a>";
+                    $btn_link = "<a class='btn btn-secondary' type='button' style='font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;' href='file_candidacy.php?id=$student_id' target='_self'>File for candidacy</a>";
                   }
 
                   echo $btn_link;
