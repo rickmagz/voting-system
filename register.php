@@ -192,8 +192,8 @@ include 'db.php';
       </p>
       <ul class="list-inline">
         <li class="list-inline-item">
-          <a href="index.php" style="color: var(--bs-blue); text-decoration: none">Back to Home</a>
-          <a href="seb/index.php" style="color: var(--bs-blue); text-decoration: none">Admin</a>
+          <a href="index.php" style="color: var(--bs-blue); text-decoration: none">Back to Home</a> |
+          <a href="seb/index.php" style="color: var(--bs-blue); text-decoration: none"> Login as Admin</a>
         </li>
       </ul>
     </div>
