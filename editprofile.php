@@ -144,7 +144,7 @@ if (mysqli_num_rows($get_student) > 0) {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $update = mysqli_query($cxn, "UPDATE student SET student_id='$id', username='$username', password='$password' WHERE id='$session_id'") or die("Error in query: $update." . mysqli_error($cxn));
+        $update = mysqli_query($cxn, "UPDATE student SET student_id='$id', username='$username', password='$password', first_name='$firstname', last_name='$lastname' WHERE id='$session_id'") or die("Error in query: $update." . mysqli_error($cxn));
 
         echo "<script type='text/javascript'> alert('Successfully Modified Please log in again!'); location.href = 'login.php'; </script>";
     }
