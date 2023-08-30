@@ -32,7 +32,7 @@ $council = $_SESSION['council'];
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img src="assets/img/ISAT-U-logo-shadow1.png" width="50px" height="50px"><img src="assets/img/sr-logo.png" width="50px" height="50px"><span style="margin-left: 9px;font-family: Muli;color: var(--bs-blue);font-weight: bold;">ISATU Miagao Campus <br>Student Republic Election</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
+                    <li class="nav-item">
                         <?php
                         $voted = mysqli_query($cxn, "SELECT * FROM votes WHERE student_id='$student_id'") or die();
                         $if_voted = mysqli_num_rows($voted);
@@ -90,7 +90,7 @@ $council = $_SESSION['council'];
                                     <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
-                                    <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" width="250px" height="250px" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" width="250px" height="250px" />
                                 </div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@ $council = $_SESSION['council'];
                                     <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
-                                    <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" />
                                 </div>
                             </div>
                         </div>
@@ -171,7 +171,7 @@ $council = $_SESSION['council'];
                                     <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +212,7 @@ $council = $_SESSION['council'];
                                     <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +252,7 @@ $council = $_SESSION['council'];
                                     <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
                                 </div>
                             </div>
                         </div>
@@ -294,7 +294,7 @@ $council = $_SESSION['council'];
                                     <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
                                 </div>
                             </div>
                         </div>

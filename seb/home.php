@@ -203,7 +203,7 @@ $date = date('m/d/Y h:i:s A');
                                             <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
-                                            <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" width="250px" height="250px" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                            <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" width="250px" height="250px" />
                                         </div>
                                     </div>
                                 </div>
@@ -246,7 +246,7 @@ $date = date('m/d/Y h:i:s A');
                                             <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
-                                            <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" /><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                            <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $image; ?>" />
                                         </div>
                                     </div>
                                 </div>
@@ -288,7 +288,7 @@ $date = date('m/d/Y h:i:s A');
                                             <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure>
                                         </div>
                                     </div>
                                 </div>
@@ -332,7 +332,7 @@ $date = date('m/d/Y h:i:s A');
                                             <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure>
                                         </div>
                                     </div>
                                 </div>
@@ -374,7 +374,7 @@ $date = date('m/d/Y h:i:s A');
                                             <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure>
                                         </div>
                                     </div>
                                 </div>
@@ -417,7 +417,7 @@ $date = date('m/d/Y h:i:s A');
                                             <span><?php echo $council; ?></span>
                                         </div>
                                         <div class="card-body" style="text-align: center;">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure><button class="btn btn-primary" type="button" style="text-align: center;">more info</button>
+                                            <figure class="figure"><img class="img-fluid figure-img" src="../uploads/<?php echo $image; ?>"></figure>
                                         </div>
                                     </div>
                                 </div>
