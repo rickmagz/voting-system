@@ -2,6 +2,20 @@
 session_start();
 include '../db.php';
 
+$first_name = $_SESSION['first_name'];
+$last_name = $_SESSION['last_name'];
+$student_id = $_SESSION['student_id'];
+
+$get_seb_id = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_id'") or die("Error in query: $get_seb_id." . mysqli_error($cxn));
+
+if (mysqli_num_rows($get_seb_id) > 0) {
+  $i = mysqli_fetch_assoc($get_seb_id);
+  $_SESSION['id'] = $i['id'];
+  $img = $i['image'];
+}
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -37,7 +51,7 @@ include '../db.php';
         );
       ">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#"><img width="75" height="75" src="../assets/img/ISAT-U-logo-shadow1.png" /><img width="75" height="75" src="../assets/img/sr-logo.png" /><span style="
+      <a class="navbar-brand d-flex align-items-center" href="home.php"><img width="75" height="75" src="../assets/img/ISAT-U-logo-shadow1.png" /><img width="75" height="75" src="../assets/img/sr-logo.png" /><span style="
               margin-left: 4px;
               font-family: Lato, sans-serif;
               font-weight: bold;
@@ -46,16 +60,22 @@ include '../db.php';
         <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navcol-2">
-      <ul class="navbar-nav ms-auto" style="color: var(--bs-black);font-weight: bold;">
-                    <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#masthead" style="font-size: 18px;">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#candidates" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">The Candidates</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#tally" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">Tally of Votes</a></li>
-                    <li class="nav-item dropstart"><a class="nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">More</a>
-                        <div class="dropdown-menu dropdown-menu-start" style="border-radius: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;border-width: 1px;color: var(--bs-navbar-brand-color);"><a class="dropdown-item" style="--bs-body-color: var(--bs-navbar-brand-color);" href="election_mgt.php">Election<br>Management</a><a class="dropdown-item" href="seb.php">About S.E.B.</a><a class="dropdown-item" href="results.php">Print Election<br>Results</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#" style="text-align: left;"><img width="30" height="30" src="../assets/img/Screenshot_2021-01-28-04-41-56-92.jpg">&nbsp;<?php echo $_SESSION['first_name']; ?></a><a class="dropdown-item" href="settings.php" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a><a class="dropdown-item" href="./logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
-                        </div>
-                    </li>
-                </ul>
+        <ul class="navbar-nav ms-auto" style="color: var(--bs-black);font-weight: bold;">
+          <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="home.php" style="font-size: 18px;">Home</a></li>
+          <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="home.php#candidates" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">The Candidates</a></li>
+          <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="home.php#tally" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">Tally of Votes</a></li>
+          <li class="nav-item dropstart"><a class="nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">More</a>
+            <div class="dropdown-menu dropdown-menu-start" style="border-radius: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;border-width: 1px;color: var(--bs-navbar-brand-color);">
+              <a class="dropdown-item" style="--bs-body-color: var(--bs-navbar-brand-color);" href="election_mgt.php">Election<br>Management</a>
+              <a class="dropdown-item" href="seb.php">About S.E.B.</a>
+              <a class="dropdown-item" href="results.php">Print Election<br>Results</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" style="text-align: left;">Logged in as: &nbsp;<strong><?php echo $_SESSION['first_name']; ?></strong></a>
+              <a class="dropdown-item" href="settings.php" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a>
+              <a class="dropdown-item" href="./logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
@@ -102,7 +122,7 @@ include '../db.php';
                       ">
                     <div class="col-5 col-sm-4 col-md-3 col-lg-2 col-xl-2 offset-0">
                       <figure class="figure">
-                        <img class="rounded-circle img-fluid figure-img" src="../assets/img/Screenshot_2021-01-28-04-41-56-92.jpg" width="300px" height="300px" />
+                        <img class="rounded-circle img-fluid figure-img" src="/uploads/<?php echo $img; ?>" width="300px" height="300px" alt="<?php echo $img; ?>" />
                       </figure>
                     </div>
                     <div class="col-12 col-sm-6 col-md-7 col-lg-10 col-xl-8" style="margin-top: 11px">
@@ -111,9 +131,9 @@ include '../db.php';
                             font-family: Muli;
                             color: var(--bs-black);
                           ">
-                        John Smith (SEB Commissioner)
+                        <?php echo $first_name; ?> <?php echo $last_name; ?> ()
                       </h3>
-                      <span style="font-size: 21px">2018-1233456-M<br /></span><button class="btn btn-primary" type="button" style="
+                      <span style="font-size: 21px"><?php echo $student_id; ?><br /></span><button class="btn btn-primary" type="button" style="
                             font-family: Muli;
                             font-size: 14px;
                             border-width: 1px;
@@ -405,6 +425,7 @@ include '../db.php';
       </div>
     </div>
   </div>
+
   <div class="modal fade" role="dialog" tabindex="-1" id="editsuser">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
@@ -545,6 +566,8 @@ include '../db.php';
       </div>
     </div>
   </div>
+
+
   <div class="modal fade" role="dialog" tabindex="-1" id="adduser">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">

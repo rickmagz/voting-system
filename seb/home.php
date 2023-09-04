@@ -2,6 +2,15 @@
 session_start();
 include '../db.php';
 
+$student_id = $_SESSION['student_id'];
+$first_name = $_SESSION['first_name'];
+
+//get data from current session
+$session = mysqli_query($cxn, "SELECT image FROM seb WHERE student_id='$student_id'") or die("Error in query: $session." . mysqli_error($cxn));
+if (mysqli_num_rows($session) > 0) {
+    $s = mysqli_fetch_assoc($session);
+}
+
 //get total number of voters in education council
 $educ = mysqli_query($cxn, "SELECT council FROM student WHERE council='Education'");
 $educ_voters = mysqli_num_rows($educ);
@@ -11,11 +20,11 @@ $comstud = mysqli_query($cxn, "SELECT council FROM student WHERE council='Comput
 $comstud_voters = mysqli_num_rows($comstud);
 
 //get total number of voters in BIT council
-$bit = mysqli_query($cxn, "SELECT council FROM student WHERE council='BIT'");
+$bit = mysqli_query($cxn, "SELECT council FROM student WHERE council='B.I.T.'");
 $bit_voters = mysqli_num_rows($bit);
 
 //get total number of voters in HBM council
-$hbm = mysqli_query($cxn, "SELECT council FROM student WHERE council='HBM'");
+$hbm = mysqli_query($cxn, "SELECT council FROM student WHERE council='H.B.M.'");
 $hbm_voters = mysqli_num_rows($hbm);
 
 //get total 
@@ -31,11 +40,11 @@ $cs = mysqli_query($cxn, "SELECT council FROM votes WHERE council='Computer Stud
 $cs_ballots = mysqli_num_rows($cs);
 
 //get total number of ballot from BIT council
-$idtech = mysqli_query($cxn, "SELECT council FROM votes WHERE council='BIT'");
+$idtech = mysqli_query($cxn, "SELECT council FROM votes WHERE council='B.I.T.'");
 $bit_ballots = mysqli_num_rows($idtech);
 
 //get total number of ballot from HBM council
-$hbmgt = mysqli_query($cxn, "SELECT council FROM votes WHERE council='HBM'");
+$hbmgt = mysqli_query($cxn, "SELECT council FROM votes WHERE council='H.B.M.'");
 $hbm_ballots = mysqli_num_rows($hbmgt);
 
 //get total ballots
@@ -76,8 +85,14 @@ $date = date('m/d/Y h:i:s A');
                     <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#candidates" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">The Candidates</a></li>
                     <li class="nav-item"><a class="nav-link" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#tally" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">Tally of Votes</a></li>
                     <li class="nav-item dropstart"><a class="nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" href="#" style="--bs-body-color: var(--bs-navbar-brand-color);font-size: 18px;">More</a>
-                        <div class="dropdown-menu dropdown-menu-start" style="border-radius: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;border-width: 1px;color: var(--bs-navbar-brand-color);"><a class="dropdown-item" style="--bs-body-color: var(--bs-navbar-brand-color);" href="election_mgt.php">Election<br>Management</a><a class="dropdown-item" href="seb.php">About S.E.B.</a><a class="dropdown-item" href="results.php">Print Election<br>Results</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#" style="text-align: left;"><img width="30" height="30" src="../assets/img/Screenshot_2021-01-28-04-41-56-92.jpg">&nbsp;<?php echo $_SESSION['first_name']; ?></a><a class="dropdown-item" href="settings.php" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a><a class="dropdown-item" href="./logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
+                        <div class="dropdown-menu dropdown-menu-start" style="border-radius: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;border-width: 1px;color: var(--bs-navbar-brand-color);">
+                            <a class="dropdown-item" style="--bs-body-color: var(--bs-navbar-brand-color);" href="election_mgt.php">Election<br>Management</a>
+                            <a class="dropdown-item" href="seb.php">About S.E.B.</a>
+                            <a class="dropdown-item" href="results.php">Print Election<br>Results</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" style="text-align: left;">Logged in as: &nbsp;<strong><?php echo $_SESSION['first_name']; ?></strong></a>
+                            <a class="dropdown-item" href="settings.php" style="background: var(--bs-blue);color: var(--bs-dropdown-bg);">Settings</a>
+                            <a class="dropdown-item" href="./logout.php" style="background: var(--bs-red);color: var(--bs-dropdown-bg);">Log out</a>
                         </div>
                     </li>
                 </ul>
