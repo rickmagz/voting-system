@@ -122,7 +122,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                       ">
                     <div class="col-5 col-sm-4 col-md-3 col-lg-2 col-xl-2 offset-0">
                       <figure class="figure">
-                        <img class="rounded-circle img-fluid figure-img" src="/uploads/<?php echo $img; ?>" width="300px" height="300px" alt="<?php echo $img; ?>" />
+                        <img class="rounded-circle img-fluid figure-img" src="../uploads/<?php echo $img; ?>" width="300px" height="300px" alt="<?php echo $img; ?>" />
                       </figure>
                     </div>
                     <div class="col-12 col-sm-6 col-md-7 col-lg-10 col-xl-8" style="margin-top: 11px">
@@ -131,20 +131,9 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                             font-family: Muli;
                             color: var(--bs-black);
                           ">
-                        <?php echo $first_name; ?> <?php echo $last_name; ?> ()
+                        <?php echo $first_name; ?> <?php echo $last_name; ?>
                       </h3>
-                      <span style="font-size: 21px"><?php echo $student_id; ?><br /></span><button class="btn btn-primary" type="button" style="
-                            font-family: Muli;
-                            font-size: 14px;
-                            border-width: 1px;
-                            margin-top: 10px;
-                            font-weight: bold;
-                            padding-right: 30px;
-                            padding-left: 30px;
-                            text-align: center;
-                          " data-bs-target="#editaccount" data-bs-toggle="modal">
-                        edit profile
-                      </button>
+                      <span style="font-size: 21px"><?php echo $student_id; ?><br /></span> <a class="btn btn-primary" type="button" style="font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;" href="editsebprofile.php?id=<?php echo $_SESSION['id']; ?>" target="_self">edit profile</a>
                     </div>
                   </div>
                   <div class="row" style="
@@ -165,7 +154,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                           ">
                         Student Name
                       </h5>
-                      <span style="font-size: 21px">John Smith</span>
+                      <span style="font-size: 21px"><?php echo $first_name; ?> <?php echo $last_name; ?></span>
                     </div>
                     <div class="col-xl-12" id="council" style="padding-top: 10px; margin-top: 14px">
                       <h5 style="
@@ -176,7 +165,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                           ">
                         Council
                       </h5>
-                      <span style="font-size: 21px">Computer Studies</span>
+                      <span style="font-size: 21px"><?php echo $i['council']; ?></span>
                     </div>
                     <div class="col-xl-12" id="course" style="padding-top: 10px; margin-top: 14px">
                       <h5 style="
@@ -186,7 +175,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                           ">
                         Course
                       </h5>
-                      <span style="font-size: 21px">Information Technology</span>
+                      <span style="font-size: 21px"><?php echo $i['course']; ?></span>
                     </div>
                     <div class="col-xl-12" id="yearsec" style="padding-top: 10px; margin-top: 14px">
                       <h5 style="
@@ -196,7 +185,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                           ">
                         Year &amp; Section
                       </h5>
-                      <span style="font-size: 21px">4-A</span>
+                      <span style="font-size: 21px"><?php echo $i['year']; ?>-<?php echo $i['section']; ?></span>
                     </div>
                     <div class="col-xl-12" id="position" style="padding-top: 10px; margin-top: 14px">
                       <h5 style="
@@ -206,12 +195,14 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                           ">
                         SEB Position
                       </h5>
-                      <span style="font-size: 21px">Commisioner</span>
+                      <span style="font-size: 21px"><?php echo $i['position']; ?></span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <!-- system users -->
             <div class="tab-pane fade" role="tabpanel" id="systemsettings" style="
                   border-top-left-radius: 0px;
                   border-bottom-right-radius: 5px;
@@ -224,9 +215,9 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                 <div class="card-body">
                   <div class="row">
                     <div class="col-xl-12 text-start">
-                      <button class="btn btn-primary btn-sm" type="button" data-bs-target="#adduser" data-bs-toggle="modal">
+                      <a class="btn btn-primary btn-sm" type="button" href="addsebaccount.php" target="_self">
                         add new system user
-                      </button>
+                      </a>
                     </div>
                     <div class="col-xl-12" style="margin-top: 10px">
                       <div class="table-responsive-lg">
@@ -242,25 +233,39 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>2018-1233456-M<br /></td>
-                              <td>John Smith</td>
-                              <td>Computer Studies</td>
-                              <td>BSIT 4-A</td>
-                              <td>Commissioner</td>
-                              <td style="
+                            <?php
+                            $g = 0;
+                            $get_seb_info = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_id'") or die("Error in query: $get_seb_info." . mysqli_error($cxn));
+
+                            if (mysqli_num_rows($get_seb_info) > 0) {
+                              while ($s = mysqli_fetch_array($get_seb_info)) {
+
+                                $g++;
+
+                            ?>
+                                <tr>
+                                  <td><?php echo $s['student_id']; ?><br /></td>
+                                  <td><?php echo $s['first_name']; ?> <?php echo $i['last_name']; ?></td>
+                                  <td><?php echo $s['council']; ?></td>
+                                  <td>BS <?php echo $s['course']; ?> <?php echo $s['year']; ?>-<?php echo $s['section']; ?></td>
+                                  <td><?php echo $s['position']; ?></td>
+                                  <td style="
                                     border-right-color: var(--bs-card-cap-bg);
                                   ">
-                                <button class="btn btn-primary btn-sm" type="button" data-bs-target="#editsuser" data-bs-toggle="modal">
-                                  edit
-                                </button>
-                              </td>
-                              <td>
-                                <button class="btn btn-danger btn-sm" type="button">
-                                  delete
-                                </button>
-                              </td>
-                            </tr>
+                                    <a class="btn btn-primary btn-sm" type="button" href="editsebprofile.php?id=<?php echo $_SESSION['id']; ?>" target="_self">
+                                      edit
+                                    </a>
+                                  </td>
+                                  <td>
+                                    <a class="btn btn-danger btn-sm" type="button" href="deletesebaccount.php?=<?php echo $_SESSION['id']; ?>" target="_self">
+                                      delete
+                                    </a>
+                                  </td>
+                                </tr>
+                            <?php
+                              }
+                            }
+                            ?>
                           </tbody>
                         </table>
                       </div>
@@ -285,429 +290,6 @@ if (mysqli_num_rows($get_seb_id) > 0) {
       </p>
     </div>
   </footer>
-  <div class="modal fade" role="dialog" tabindex="-1" id="editaccount">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" style="font-family: Muli; font-weight: bold">
-            Edit User Account
-          </h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body align-content-center">
-          <form id="editaccount" method="post" action="settings.php" name="editaccount">
-            <div class="container">
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Student Picture</p>
-                </div>
-                <div class="col-xl-6">
-                  <input class="border rounded shadow-sm form-control" type="file" autofocus="" required="" style="width: 289.2px; height: 32px" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Student ID</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="id" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">First Name</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="firstname" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Last Name</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="lastname" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Council</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="council" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="EDU" selected="">Education</option>
-                      <option value="BIT">B.I.T.</option>
-                      <option value="HBM">HBM</option>
-                      <option value="COMSTUD">Computer Studies</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Course</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="course" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="EDU" selected="">Education</option>
-                      <option value="BIT">B.I.T.</option>
-                      <option value="HBM">HBM</option>
-                      <option value="COMSTUD">Computer Studies</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Major (if any)</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="major" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Year</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="year" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="1" selected="">1st Year</option>
-                      <option value="2">2nd Year</option>
-                      <option value="3">3rd Year</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Section</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="section" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">SEB Position</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="position" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Username</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="username" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Password</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="password" autofocus="" style="width: 289.2px; height: 32px" name="password" />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" type="submit" form="editaccount" name="submit">
-            Save</button><button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
-            cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" role="dialog" tabindex="-1" id="editsuser">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" style="font-family: Muli; font-weight: bold">
-            Edit User Profile
-          </h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body align-content-center">
-          <form id="edituser" method="post" action="settings.php" name="edituser">
-            <div class="container">
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Student Picture</p>
-                </div>
-                <div class="col-xl-6">
-                  <input class="border rounded shadow-sm form-control" type="file" autofocus="" required="" style="width: 289.2px; height: 32px" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Student ID</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="id" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">First Name</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="firstname" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Last Name</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="lastname" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Council</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="council" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="EDU" selected="">Education</option>
-                      <option value="BIT">B.I.T.</option>
-                      <option value="HBM">HBM</option>
-                      <option value="COMSTUD">Computer Studies</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Course</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="course" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="EDU" selected="">Education</option>
-                      <option value="BIT">B.I.T.</option>
-                      <option value="HBM">HBM</option>
-                      <option value="COMSTUD">Computer Studies</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Major (if any)</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="major" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Year</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="year" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="1" selected="">1st Year</option>
-                      <option value="2">2nd Year</option>
-                      <option value="3">3rd Year</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Section</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="section" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">SEB Position</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="position" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Username</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="username" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Password</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="password" autofocus="" style="width: 289.2px; height: 32px" name="password" />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" id="edituser" type="submit" form="edituser" name="edituser">
-            Save</button><button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
-            cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade" role="dialog" tabindex="-1" id="adduser">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" style="font-family: Muli; font-weight: bold">
-            Add System User
-          </h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body align-content-center">
-          <form id="adduser" method="post" action="settings.php" name="adduser">
-            <div class="container">
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Student Picture</p>
-                </div>
-                <div class="col-xl-6">
-                  <input class="border rounded shadow-sm form-control" type="file" autofocus="" required="" style="width: 289.2px; height: 32px" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Student ID</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="id" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">First Name</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="firstname" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Last Name</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="lastname" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Council</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="council" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="EDU" selected="">Education</option>
-                      <option value="BIT">B.I.T.</option>
-                      <option value="HBM">HBM</option>
-                      <option value="COMSTUD">Computer Studies</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Course</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="course" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="EDU" selected="">Education</option>
-                      <option value="BIT">B.I.T.</option>
-                      <option value="HBM">HBM</option>
-                      <option value="COMSTUD">Computer Studies</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Major (if any)</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="major" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Year</p>
-                </div>
-                <div class="col-xl-9">
-                  <select class="border rounded shadow-sm form-select" name="year" style="font-size: 20px">
-                    <optgroup label="Select Council">
-                      <option value="1" selected="">1st Year</option>
-                      <option value="2">2nd Year</option>
-                      <option value="3">3rd Year</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Section</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="section" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">SEB Position</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="position" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Username</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="text" autofocus="" style="width: 289.2px; height: 32px" name="username" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-3">
-                  <p class="lead">Password</p>
-                </div>
-                <div class="col-xl-9">
-                  <input class="border rounded shadow-sm form-control" type="password" autofocus="" style="width: 289.2px; height: 32px" name="password" />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" id="adduser" type="submit" form="adduser" name="adduser">
-            Save</button><button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
-            cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/bs-init.js"></script>
