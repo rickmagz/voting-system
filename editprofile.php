@@ -63,11 +63,10 @@ if (mysqli_num_rows($get_student) > 0) {
         <form action="editprofile.php" method="POST" id="editprofile" enctype='multipart/form-data'>
             <hr />
             <div class="card" style="
-              box-shadow: 0px 0px 20px var(--bs-gray);
               margin-left: 100px;
               margin-right: 100px;
             ">
-                <div class="card-body" style="color: var(--bs-black)">
+                <div class="card-body">
                     <h2 style="font-family: Muli">
                         <strong>Edit Student Information</strong>
                     </h2>
