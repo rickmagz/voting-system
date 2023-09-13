@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../db.php';
+include './db.php';
 
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
@@ -10,7 +10,6 @@ $get_seb_id = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_i
 
 if (mysqli_num_rows($get_seb_id) > 0) {
   $i = mysqli_fetch_assoc($get_seb_id);
-  $_SESSION['id'] = $i['id'];
   $img = $i['image'];
 }
 
@@ -133,7 +132,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                           ">
                         <?php echo $first_name; ?> <?php echo $last_name; ?>
                       </h3>
-                      <span style="font-size: 21px"><?php echo $student_id; ?><br /></span> <a class="btn btn-primary" type="button" style="font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;" href="editsebprofile.php?id=<?php echo $_SESSION['id']; ?>" target="_self">edit profile</a>
+                      <span style="font-size: 21px"><?php echo $student_id; ?><br /></span> <a class="btn btn-primary" type="button" style="font-family: Muli; font-size: 14px; border-width: 1px; margin-top: 10px; font-weight: bold; padding-right: 30px; padding-left: 30px; text-align: center;" href="editsebprofile.php?id=<?php echo $student_id; ?>" target="_self">edit profile</a>
                     </div>
                   </div>
                   <div class="row" style="
@@ -227,7 +226,6 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                               <th>Student ID</th>
                               <th>Student Name</th>
                               <th>Council</th>
-                              <th>Course/Year/Section</th>
                               <th>SEB Position</th>
                               <th colspan="2">Actions</th>
                             </tr>
@@ -235,29 +233,28 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                           <tbody>
                             <?php
                             $g = 0;
-                            $get_seb_info = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_id'") or die("Error in query: $get_seb_info." . mysqli_error($cxn));
+                            $get_seb_info = mysqli_query($cxn, "SELECT * FROM seb") or die("Error in query: $get_seb_info." . mysqli_error($cxn));
 
                             if (mysqli_num_rows($get_seb_info) > 0) {
-                              while ($s = mysqli_fetch_array($get_seb_info)) {
+                              while ($s = mysqli_fetch_assoc($get_seb_info)) {
 
                                 $g++;
 
                             ?>
                                 <tr>
                                   <td><?php echo $s['student_id']; ?><br /></td>
-                                  <td><?php echo $s['first_name']; ?> <?php echo $i['last_name']; ?></td>
+                                  <td><?php echo $s['first_name']; ?> <?php echo $s['last_name']; ?></td>
                                   <td><?php echo $s['council']; ?></td>
-                                  <td>BS <?php echo $s['course']; ?> <?php echo $s['year']; ?>-<?php echo $s['section']; ?></td>
                                   <td><?php echo $s['position']; ?></td>
                                   <td style="
                                     border-right-color: var(--bs-card-cap-bg);
                                   ">
-                                    <a class="btn btn-primary btn-sm" type="button" href="editsebprofile.php?id=<?php echo $_SESSION['id']; ?>" target="_self">
+                                    <a class="btn btn-primary btn-sm" type="button" href="editsebprofile.php?id=<?php echo $s['student_id']; ?>" target="_self">
                                       edit
                                     </a>
                                   </td>
                                   <td>
-                                    <a class="btn btn-danger btn-sm" type="button" href="deletesebaccount.php?=<?php echo $_SESSION['id']; ?>" target="_self">
+                                    <a class="btn btn-danger btn-sm" type="button" href="deletesebaccount.php?=<?php echo $s['student_id']; ?>" target="_self">
                                       delete
                                     </a>
                                   </td>

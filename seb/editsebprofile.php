@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../db.php';
+include 'db.php';
 
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
@@ -10,8 +10,6 @@ $get_seb_id = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_i
 
 if (mysqli_num_rows($get_seb_id) > 0) {
     $i = mysqli_fetch_assoc($get_seb_id);
-    $_SESSION['id'] = $i['id'];
-    $id = $_SESSION['id'];
     $img = $i['image'];
 }
 
@@ -151,7 +149,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
 
                     </div>
                     <button class="btn btn-primary" type="submit" name="edit" form="editsebprofile">confirm Edit</button>
-                    <a class="btn btn-danger" href="deletesebaccount.php?id=<?php echo $i['id']; ?>">Delete Account</a>
+                    <a class="btn btn-danger" href="deletesebaccount.php?id=<?php echo $student_id; ?>">Delete Account</a>
                     <a class="btn btn-secondary" href="settings.php">Cancel</a>
                 </div>
             </div>
@@ -165,9 +163,9 @@ if (mysqli_num_rows($get_seb_id) > 0) {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $update = mysqli_query($cxn, "UPDATE seb SET student_id='$stud_id', username='$username', password='$password', first_name='$firstname', last_name='$lastname' WHERE id='$id'") or die("Error in query: $update." . mysqli_error($cxn));
+        $update = mysqli_query($cxn, "UPDATE seb SET student_id='$stud_id', username='$username', password='$password', first_name='$firstname', last_name='$lastname' WHERE student_id='$student_id'") or die("Error in query: $update." . mysqli_error($cxn));
 
-        echo "<script type='text/javascript'> alert('Successfully Modified Please log in again!'); location.href = 'index.php'; </script>";
+        echo "<script type='text/javascript'> alert('Successfully Modified. Please log in again!'); location.href = 'index.php'; </script>";
     }
 
     ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../db.php';
+include 'db.php';
 
 
 ?>
@@ -180,8 +180,7 @@ include '../db.php';
         </form>
     </main>
     <?php
-
-    $upload_folder = "/uploads/";
+    $upload_folder = "/uploads";
 
     if (isset($_POST['addseb'])) {
         $student_id = $_POST['studentid'];
@@ -196,11 +195,14 @@ include '../db.php';
         $password = $_POST['password'];
         $position = $_POST['position'];
 
-        $check_id = mysqli_query($cxn, "SELECT student_id FROM seb WHERE student_id = '$student_id'") or die("Error in query: $check_id." . mysqli_error($cxn));
 
-        $check_username = mysqli_query($cxn, "SELECT username FROM seb WHERE username ='$username'") or die("Error in query: $check_username." . mysqli_error($cxn));
+        // Check if the student_id already exists in the database.
+        $check_id = mysqli_query($cxn, "SELECT student_id FROM seb WHERE student_id = '$student_id'") or die("Error in query: " . mysqli_error($cxn));
 
-        if ($check_id->num_rows == 1 && $check_username == 1) {
+        // Check if the username already exists in the database.
+        $check_username = mysqli_query($cxn, "SELECT username FROM seb WHERE username ='$username'") or die("Error in query: " . mysqli_error($cxn));
+
+        if ($check_id->num_rows > 0 || $check_username->num_rows > 0) {
             echo "<script type='text/javascript'> alert('Student ID and/or Username has been registered!'); location.href = 'addsebaccount.php'; </script>";
         } else {
             $image = basename($_FILES["image"]["name"]);
@@ -210,15 +212,18 @@ include '../db.php';
 
             if (in_array($fileType, $allowTypes)) {
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFileFolder)) {
-                    $add = mysqli_query($cxn, "INSERT INTO seb(student_id,username,password,first_name,last_name,council,course,major,year,section,position,image) VALUES('$student_id','$username','$password','$firstname','$lastname','$council','$course','$major','$year','$section','$position','$image')") or die("Error in query: $add." . mysqli_error($cxn));
+                    $add = mysqli_query($cxn, "INSERT INTO seb (student_id, username, password, first_name, last_name, council, course, major, year, section, position, image) VALUES ('$student_id', '$username', '$password', '$firstname', '$lastname', '$council', '$course', '$major', '$year', '$section', '$position', '$image')") or die("Error in query: " . mysqli_error($cxn));
+                    echo "<script type='text/javascript'> alert('Registration Successful!'); location.href = 'settings.php'; </script>";
+                } else {
+                    echo "<script type='text/javascript'> alert('File upload failed!'); location.href = 'addsebaccount.php'; </script>";
                 }
+            } else {
+                echo "<script type='text/javascript'> alert('Invalid file type!'); location.href = 'addsebaccount.php'; </script>";
             }
-
-
-            echo "<script type='text/javascript'> alert('Registration Successful!'); location.href = 'settings.php'; </script>";
         }
     }
     ?>
+
 
 
     <footer style="
@@ -245,26 +250,19 @@ include '../db.php';
         function courseOptions() {
             var councilname = council.value;
 
-            course.innerHTML = "";
+            course.innerHTML = "<option>Select Course</option>";
 
-            if (councilname == "Education") {
-                course.innerHTML += "<option>Select Course</option>";
-                course.innerHTML += "<option value='BEED'>Elementary Education</option>";
-                course.innerHTML += "<option value='BSED'>Secondary Education</option>";
-                course.innerHTML += "<option value='BTVTED'>Technical-Vocational Teacher Education</option>";
-                course.innerHTML += "<option value='BTLED'>Technology and Livelihood Education</option>";
-            } else if (councilname == "BIT") {
-                course.innerHTML += "<option>Select Course</option>";
-                course.innerHTML += "<option value='BIT'>Bachelor in Industrial Technology</option>";
-            } else if (councilname == "HBM") {
-                course.innerHTML += "<option>Select Course</option>";
-                course.innerHTML += "<option value='Hospitality Management'>Hospitality Management</option>";
-                course.innerHTML += "<option value='Tourism Management'>Tourism Management</option>";
-                course.innerHTML += "<option value='Entrepreneurship'>Entrepreneurship</option>";
-            } else if (councilname == "Computer Studies") {
-                course.innerHTML += "<option>Select Course</option>";
-                course.innerHTML += "<option value='Information Technology'>Information Technology</option>";
-                course.innerHTML += "<option value='Information Systems'>Information Systems</option>";
+            var courseOptions = {
+                "Education": ["BEED", "BSED", "BTVTED", "BTLED"],
+                "BIT": ["BIT"],
+                "HBM": ["Hospitality Management", "Tourism Management", "Entrepreneurship"],
+                "Computer Studies": ["Information Technology", "Information Systems"]
+            };
+
+            if (courseOptions[councilname]) {
+                courseOptions[councilname].forEach(function(option) {
+                    course.innerHTML += `<option value="${option}">${option}</option>`;
+                });
             }
         }
 
@@ -273,38 +271,19 @@ include '../db.php';
         function majorOptions() {
             var coursename = course.value;
 
-            major.innerHTML = "";
+            var majorOptions = {
+                "BSED": ["English", "Filipino", "Mathematics", "Science", "Social Studies"],
+                "BTVTED": ["Automotive Technology", "Electrical Technology", "Food Service Management", "Drafting Technology", "Electronics Technology", "Garments, Fashion and Design"],
+                "BTLED": ["Home Economics", "Industrial Arts"],
+                "BIT": ["Architectural Drafting Technology", "Cosmetology", "Electronics Technology", "Fashion and Apparel Technology", "Welding and Fabrication Technology", "Heating Ventilating Air Conditioning-Refrigeration Technology", "Automotive Technology", "Electrical Technology", "Food Technology"],
+            };
 
-            if (coursename == "BSED") {
-                major.innerHTML += "<option>Select Major</option>";
-                major.innerHTML += "<option value='English'>English</option>";
-                major.innerHTML += "<option value='Filipino'>Filipino</option>";
-                major.innerHTML += "<option value='Mathematics'>Mathematics</option>";
-                major.innerHTML += "<option value='Science'>Science</option>";
-                major.innerHTML += "<option value='Social Studies'>Social Studies</option>";
-            } else if (coursename == "BTVTED") {
-                major.innerHTML += "<option>Select Major</option>";
-                major.innerHTML += "<option value='Automotive Technology'>Automotive Technology</option>";
-                major.innerHTML += "<option value='Electrical Technology'>Electrical Technology</option>";
-                major.innerHTML += "<option value='Food Service Management'>Food Service Management</option>";
-                major.innerHTML += "<option value='Drafting Technology'>Drafting Technology</option>";
-                major.innerHTML += "<option value='Electronics Technology'>Electronics Technology</option>";
-                major.innerHTML += "<option value='Garments, Fashion and Design'>Garments, Fashion and Design</option>";
-            } else if (coursename == "BTLED") {
-                major.innerHTML += "<option>Select Major</option>";
-                major.innerHTML += "<option value='Home Economics'>Home Economics</option>";
-                major.innerHTML += "<option value='Industrial Arts'>Industrial Arts</option>";
-            } else if (coursename == "BIT") {
-                major.innerHTML += "<option>Select Major</option>";
-                major.innerHTML += "<option value='Architectural Drafting Technology'>Architectural Drafting Technology</option>";
-                major.innerHTML += "<option value='Cosmetology'>Cosmetology</option>";
-                major.innerHTML += "<option value='Electronics Technology'>Electronics Technology</option>";
-                major.innerHTML += "<option value='Fashion and Apparel Technology'>Fashion and Apparel Technology</option>";
-                major.innerHTML += "<option value='Welding and Fabrication Technology'>Welding and Fabrication Technology</option>";
-                major.innerHTML += "<option value='Heating Ventilating Air Conditioning-Refrigeration Technology'>Heating Ventilating Air Conditioning-Refrigeration Technology</option>";
-                major.innerHTML += "<option value='Automotive Technology'>Automotive Technology</option>";
-                major.innerHTML += "<option value='Electrical Technology'>Electrical Technology</option>";
-                major.innerHTML += "<option value='Food Technology'>Food Technology</option>";
+            major.innerHTML = "<option>Select Major</option>";
+
+            if (majorOptions[coursename]) {
+                majorOptions[coursename].forEach(function(option) {
+                    major.innerHTML += `<option value="${option}">${option}</option>`;
+                });
             } else {
                 major.innerHTML += "<option disabled>Select Major</option>";
                 major.innerHTML += "<option selected value='None'>N/A</option>";
