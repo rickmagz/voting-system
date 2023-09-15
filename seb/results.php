@@ -334,7 +334,7 @@ $date = date('m/d/Y h:i:s A');
                             <?php
                             //get batch representatives
                             $brep = 0;
-                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='HBM' ORDER BY last_name asc");
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='H.B.M.' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
@@ -383,7 +383,7 @@ $date = date('m/d/Y h:i:s A');
                             <?php
                             //get batch representatives
                             $brep = 0;
-                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='BIT' ORDER BY last_name asc");
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Batch Representative' AND council='B.I.T.' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
@@ -629,7 +629,7 @@ $date = date('m/d/Y h:i:s A');
                             <?php
                             //get governors
                             $gov = 0;
-                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='HBM' ORDER BY last_name asc");
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='H.B.M.' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
@@ -678,7 +678,7 @@ $date = date('m/d/Y h:i:s A');
                             <?php
                             //get vice governors
                             $vgov = 0;
-                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='HBM' ORDER BY last_name asc");
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='H.B.M.' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
@@ -727,7 +727,7 @@ $date = date('m/d/Y h:i:s A');
                             <?php
                             //get governors
                             $gov = 0;
-                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='BIT' ORDER BY last_name asc");
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Governor' AND council='B.I.T.' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];
@@ -776,7 +776,7 @@ $date = date('m/d/Y h:i:s A');
                             <?php
                             //get governors
                             $vgov = 0;
-                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='BIT' ORDER BY last_name asc");
+                            $get_brep = mysqli_query($cxn, "SELECT * FROM candidates WHERE position='Vice Governor' AND council='B.I.T.' ORDER BY last_name asc");
                             if (mysqli_num_rows($get_brep) > 0) {
                                 while ($b = mysqli_fetch_array($get_brep)) {
                                     $fname = $b['first_name'];

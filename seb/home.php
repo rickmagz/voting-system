@@ -578,7 +578,7 @@ $date = date('m/d/Y h:i:s A');
                         <thead>
                             <tr>
                                 <th style="background: var(--bs-blue);color: var(--bs-white);">Name of Candidate</th>
-                                <th style="background: var(--bs-white);color: var(--bs-table-color);">No. of Votes</th>
+                                <th style="background: var(--bs-yellow);color: var(--bs-table-color);">No. of Votes</th>
                             </tr>
                         </thead>
                         <tbody>

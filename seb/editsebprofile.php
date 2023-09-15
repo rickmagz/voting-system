@@ -2,9 +2,7 @@
 session_start();
 include 'db.php';
 
-$first_name = $_SESSION['first_name'];
-$last_name = $_SESSION['last_name'];
-$student_id = $_SESSION['student_id'];
+$student_id = $_GET['id'];
 
 $get_seb_id = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_id'") or die("Error in query: $get_seb_id." . mysqli_error($cxn));
 
@@ -78,7 +76,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
         </div>
     </nav>
     <main style="margin: 0 auto; margin-bottom: 54px;">
-        <form action="editsebprofile.php" method="POST" id="editsebprofile" enctype='multipart/form-data'>
+        <form action="./includes/edit.php" method="POST" id="editsebprofile" enctype='multipart/form-data'>
             <hr />
             <div class="card" style="
               margin-left: 100px;
@@ -90,8 +88,9 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                     </h2>
                     <div class="row">
                         <div class="col mb-3 mt-3" id="id">
+                            <input type="hidden" name="no" value="<?php echo $i['id']; ?>">
                             <span for="id">Student ID</span>
-                            <input type="text" class="form-control" id="id" value="<?php echo $student_id; ?>" name="id" autofocus required />
+                            <input type="text" class="form-control" id="id" value="<?php echo $i['student_id']; ?>" name="id" autofocus required />
                         </div>
                         <div class="col align-self-center" id="image">
 
@@ -100,11 +99,11 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                     <div class="row">
                         <div class="col " id="firstname-1">
                             <span for="name">First Name</span>
-                            <input type="text" class="form-control" id="firstname" value="<?php echo $first_name; ?>" name="firstname" required />
+                            <input type="text" class="form-control" id="firstname" value="<?php echo $i['first_name']; ?>" name="firstname" required />
                         </div>
                         <div class="col" id="lastname-1">
                             <span for="name">Last Name</span>
-                            <input type="text" class="form-control" id="lastname" value="<?php echo $last_name; ?>" name="lastname" required />
+                            <input type="text" class="form-control" id="lastname" value="<?php echo $i['last_name']; ?>" name="lastname" required />
                         </div>
                     </div>
                     <hr />
@@ -155,20 +154,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
             </div>
         </form>
     </main>
-    <?php
-    if (isset($_POST['edit'])) {
-        $stud_id = $_POST['id'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
 
-        $update = mysqli_query($cxn, "UPDATE seb SET student_id='$stud_id', username='$username', password='$password', first_name='$firstname', last_name='$lastname' WHERE student_id='$student_id'") or die("Error in query: $update." . mysqli_error($cxn));
-
-        echo "<script type='text/javascript'> alert('Successfully Modified. Please log in again!'); location.href = 'index.php'; </script>";
-    }
-
-    ?>
 
 
     <footer style="

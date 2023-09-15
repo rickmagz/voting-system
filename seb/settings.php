@@ -227,7 +227,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                               <th>Student Name</th>
                               <th>Council</th>
                               <th>SEB Position</th>
-                              <th colspan="2">Actions</th>
+                              <th>Actions</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -252,12 +252,11 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                                     <a class="btn btn-primary btn-sm" type="button" href="editsebprofile.php?id=<?php echo $s['student_id']; ?>" target="_self">
                                       edit
                                     </a>
-                                  </td>
-                                  <td>
                                     <a class="btn btn-danger btn-sm" type="button" href="deletesebaccount.php?=<?php echo $s['student_id']; ?>" target="_self">
                                       delete
                                     </a>
                                   </td>
+
                                 </tr>
                             <?php
                               }
