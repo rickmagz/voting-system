@@ -212,10 +212,10 @@ $date = date('m/d/Y h:i:s A');
                                 $ip++;
                         ?>
                                 <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
-                                    <div class="card candidate-card">
+                                    <div class="card h-100 candidate-card">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
-                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="150" height="150" />
+                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="100" height="100" />
                                             </div>
                                             <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
                                                 <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
@@ -258,10 +258,10 @@ $date = date('m/d/Y h:i:s A');
                                 $vp++;
                         ?>
                                 <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
-                                    <div class="card candidate-card">
+                                    <div class="card h-100 candidate-card">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
-                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="150" height="150" />
+                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="100" height="100" />
                                             </div>
                                             <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
                                                 <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
@@ -303,10 +303,10 @@ $date = date('m/d/Y h:i:s A');
 
                         ?>
                                 <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
-                                    <div class="card candidate-card">
+                                    <div class="card h-100 candidate-card">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
-                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="150" height="150" />
+                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="100" height="100" />
                                             </div>
                                             <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
                                                 <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
@@ -350,10 +350,10 @@ $date = date('m/d/Y h:i:s A');
 
                         ?>
                                 <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
-                                    <div class="card candidate-card">
+                                    <div class="card h-100 candidate-card">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
-                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="150" height="150" />
+                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="100" height="100" />
                                             </div>
                                             <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
                                                 <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
@@ -395,10 +395,10 @@ $date = date('m/d/Y h:i:s A');
 
                         ?>
                                 <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
-                                    <div class="card candidate-card">
+                                    <div class="card h-100 candidate-card">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
-                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="150" height="150" />
+                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="100" height="100" />
                                             </div>
                                             <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
                                                 <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
@@ -441,10 +441,10 @@ $date = date('m/d/Y h:i:s A');
 
                         ?>
                                 <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
-                                    <div class="card candidate-card">
+                                    <div class="card h-100 candidate-card">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
-                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="150" height="150" />
+                                                <img class="rounded-circle img-fluid border" src="../uploads/<?php echo $image; ?>" width="100" height="100" />
                                             </div>
                                             <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
                                                 <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
