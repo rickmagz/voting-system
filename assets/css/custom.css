@@ -12,9 +12,6 @@ header.masthead {
     text-align: center;
     font-size: smaller;
   }
-}
-
-@media (max-width: 760px) {
   .candidate-img img {
     height: 60px;
     width: 60px;
