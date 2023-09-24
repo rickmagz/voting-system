@@ -66,6 +66,7 @@ $council = $_SESSION['council'];
         </div>
         <div class="container" data-aos="zoom-out" data-aos-delay="200" id="president" style="margin-bottom: 10px;margin-top: 10px;">
             <div class="row">
+
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                     <h4 class="text-capitalize text-start" style="font-family: Muli;font-weight: bold;text-align: center;">president</h4>
                 </div>
@@ -84,16 +85,30 @@ $council = $_SESSION['council'];
 
                         $ip++;
                 ?>
-                        <div class="col-6 col-sm-3 col-md-3">
+                        <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
+                            <div class="card candidate-card">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
+                                        <img class="rounded-circle img-fluid border" src="uploads/<?php echo $image; ?>" width="150" height="150" />
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
+                                        <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
+                                        <span><?php echo $p['council']; ?></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-6 col-sm-3 col-md-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
+                                    <h4></h4>
                                 </div>
                                 <div class="card-body" style="text-align: center;">
                                     <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" width="250px" height="250px" />
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                 <?php
                     }
                 } else {
@@ -126,13 +141,17 @@ $council = $_SESSION['council'];
 
                         $vp++;
                 ?>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4><?php echo $fname; ?> <?php echo $lname; ?> </h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <img class="rounded-circle img-fluid figure-img" src="uploads/<?php echo $image; ?>" />
+                        <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
+                            <div class="card candidate-card">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
+                                        <img class="rounded-circle img-fluid border" src="uploads/<?php echo $image; ?>" width="150" height="150" />
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
+                                        <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
+                                        <span><?php echo $v['council']; ?></span>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -165,13 +184,17 @@ $council = $_SESSION['council'];
                         $sen++;
 
                 ?>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
+                        <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
+                            <div class="card candidate-card">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
+                                        <img class="rounded-circle img-fluid border" src="uploads/<?php echo $image; ?>" width="150" height="150" />
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
+                                        <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
+                                        <span><?php echo $s['council']; ?></span>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -206,13 +229,17 @@ $council = $_SESSION['council'];
                         $brep++;
 
                 ?>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
+                        <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
+                            <div class="card candidate-card">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
+                                        <img class="rounded-circle img-fluid border" src="uploads/<?php echo $image; ?>" width="150" height="150" />
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
+                                        <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
+                                        <span><?php echo $b['council']; ?></span>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -246,13 +273,17 @@ $council = $_SESSION['council'];
                         $gov++;
 
                 ?>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
+                        <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
+                            <div class="card candidate-card">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
+                                        <img class="rounded-circle img-fluid border" src="uploads/<?php echo $image; ?>" width="150" height="150" />
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
+                                        <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
+                                        <span><?php echo $g['council']; ?></span>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -288,13 +319,17 @@ $council = $_SESSION['council'];
                         $vgov++;
 
                 ?>
-                        <div class="col-6 col-sm-3 col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4><?php echo $fname; ?> <?php echo $lname; ?></h4>
-                                </div>
-                                <div class="card-body" style="text-align: center;">
-                                    <figure class="figure"><img class="img-fluid figure-img" src="uploads/<?php echo $image; ?>"></figure>
+                        <div class="col-6 col-sm-3 col-md-5 col-lg-6 col-xl-5 col-xxl-5 offset-xxl-0 p-2">
+                            <div class="card candidate-card">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-4 offset-md-0 offset-xl-0 justify-content-center d-flex p-2 candidate-img">
+                                        <img class="rounded-circle img-fluid border" src="uploads/<?php echo $image; ?>" width="150" height="150" />
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 col-xxl-6 offset-md-0 align-items-center align-self-center candidate-info">
+                                        <h5 class="fw-normal"><strong><?php echo $fname; ?> <?php echo $lname; ?> </strong></h5>
+                                        <span><?php echo $vg['council']; ?></span>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>

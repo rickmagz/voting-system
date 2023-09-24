@@ -7,3 +7,16 @@ header.masthead {
   background: #ffffff;
 }
 
+@media (max-width: 760px) {
+  .candidate-info, .candidate-info > span{
+    text-align: center;
+    font-size: smaller;
+  }
+}
+
+@media (max-width: 760px) {
+  .candidate-img img {
+    height: 60px;
+    width: 60px;
+  }
+}
