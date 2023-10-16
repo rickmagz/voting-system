@@ -82,17 +82,20 @@ if (mysqli_num_rows($get_seb_id) > 0) {
     <div class="row" style="margin-top: 128px; margin-right: 24px; margin-left: 24px">
       <div class="col-sm-12 col-md-8 col-lg-12 col-xl-10 offset-md-0 offset-lg-0 offset-xl-1 align-self-center">
         <h2 style="font-family: Lato, sans-serif; font-weight: bold">
-          Settings<br />
+          System Global Settings<br />
         </h2>
       </div>
       <div class="col-xl-10 offset-xl-1">
         <div>
           <ul class="nav nav-pills" role="tablist">
-            <li class="nav-item border rounded" role="presentation" style="border-width: 0px; border-bottom-left-radius: 0px">
-              <a class="nav-link active" role="tab" data-bs-toggle="pill" href="#usersettings">User</a>
+            <li class="nav-item border rounded" role="presentation">
+              <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#usersettings">S.E.B. User Profile</a>
             </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" role="tab" data-bs-toggle="pill" href="#systemsettings">System</a>
+            <li class="nav-item border rounded" role="presentation">
+              <a class="nav-link" role="tab" data-bs-toggle="tab" href="#systemsettings">Election System Users</a>
+            </li>
+            <li class="nav-item border rounded" role="presentation">
+              <a class="nav-link" role="tab" data-bs-toggle="tab" href="#studentmngt">Student Management</a>
             </li>
           </ul>
           <div class="tab-content" style="
@@ -101,6 +104,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                 border-bottom-left-radius: 5px;
                 background: var(--bs-white);
               ">
+            <!-- user profile -->
             <div class="tab-pane fade show active" role="tabpanel" id="usersettings" style="
                   border-top-left-radius: 0px;
                   border-bottom-right-radius: 5px;
@@ -253,6 +257,78 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                                       edit
                                     </a>
                                     <a class="btn btn-danger btn-sm" type="button" href="deletesebaccount.php?=<?php echo $s['student_id']; ?>" target="_self">
+                                      delete
+                                    </a>
+                                  </td>
+
+                                </tr>
+                            <?php
+                              }
+                            }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- student management-->
+            <div class="tab-pane fade" role="tabpanel" id="studentmngt" style="
+                  border-top-left-radius: 0px;
+                  border-bottom-right-radius: 5px;
+                  border-bottom-left-radius: 5px;
+                  border: 1px solid var(--bs-gray-300);
+                  border-top-width: 0px;
+                  padding: 12px;
+                ">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-12 text-start">
+                      <a class="btn btn-primary btn-sm" type="button" href="addsebaccount.php" target="_self">
+                        add new student
+                      </a>
+                    </div>
+                    <div class="col-xl-12" style="margin-top: 10px">
+                      <div class="table-responsive-lg">
+                        <table class="table table-hover table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Student ID</th>
+                              <th>Student Name</th>
+                              <th>Council</th>
+                              <th>Username</th>
+                              <th>Password</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                            $g = 0;
+                            $get_student_info = mysqli_query($cxn, "SELECT * FROM student") or die("Error in query: $get_student_info." . mysqli_error($cxn));
+
+                            if (mysqli_num_rows($get_student_info) > 0) {
+                              while ($st = mysqli_fetch_assoc($get_student_info)) {
+
+                                $g++;
+
+                            ?>
+                                <tr>
+                                  <td><?php echo $st['student_id']; ?><br /></td>
+                                  <td><?php echo $st['first_name']; ?> <?php echo $st['last_name']; ?></td>
+                                  <td><?php echo $st['council']; ?></td>
+                                  <td><?php echo $st['username']; ?></td>
+                                  <td><?php echo $st['password']; ?></td>
+                                  <td style="
+                                    border-right-color: var(--bs-card-cap-bg);
+                                  ">
+                                    <a class="btn btn-primary btn-sm" type="button" href="editstudentprofile.php?id=<?php echo $st['student_id']; ?>" target="_self">
+                                      edit
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" type="button" href="deletestudentaccount.php?=<?php echo $st['student_id']; ?>" target="_self">
                                       delete
                                     </a>
                                   </td>
