@@ -52,11 +52,17 @@ include 'db.php';
                                     <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-2 offset-md-2 offset-lg-2 offset-xl-2">
                                         <input class="form-control" type="password" name="password" placeholder="Enter Password" />
                                     </div>
+
+
                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 offset-sm-3 offset-md-3 offset-lg-3 offset-xl-3 align-self-center" style="padding-top: 15px">
                                         <button class="btn btn-primary d-block w-100" type="submit" name="login" form="login">
                                             Login
                                         </button>
                                         <a class="btn btn-secondary d-block w-100" href="index.php">Back to home</a>
+                                        <br>
+                                        <a class="text-primary" href="forgotpassword.php" style="text-decoration: none;">
+                                            <span class="text-primary">Forgot Password?</span>
+                                        </a>
                                     </div>
                                 </div>
 
