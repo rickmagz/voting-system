@@ -73,7 +73,7 @@ if (mysqli_num_rows($get_student_info) > 0) {
         </div>
     </nav>
     <main style="margin: 0 auto; margin-bottom: 54px;">
-        <form action="deletestudentprofile.php" method="POST" id="deletesstudprofile" enctype='multipart/form-data'>
+        <form action="includes/deletestudent.php" method="POST" id="deletesstudprofile" enctype='multipart/form-data'>
             <hr />
             <div class="card" style="
               margin-left: 100px;
@@ -137,14 +137,6 @@ if (mysqli_num_rows($get_student_info) > 0) {
             </div>
         </form>
     </main>
-    <?php
-    if (isset($_POST['delete'])) {
-        $id = $_POST['id'];
-        mysqli_query($cxn, "DELETE FROM student WHERE `student_id`='$id'") or die(mysqli_error($cxn));
-
-        echo "<script type='text/javascript'> alert('Student Info deleted!'); location.href = 'settings.php'; </script>";
-    }
-    ?>
 
 
 
