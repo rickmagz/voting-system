@@ -1,6 +1,6 @@
 <?php
 session_start();
-include './db.php';
+include '../db.php';
 
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
@@ -89,7 +89,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
         <div>
           <ul class="nav nav-pills" role="tablist">
             <li class="nav-item border rounded" role="presentation">
-              <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#usersettings">S.E.B. User Profile</a>
+              <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#usersettings">My Profile</a>
             </li>
             <li class="nav-item border rounded" role="presentation">
               <a class="nav-link" role="tab" data-bs-toggle="tab" href="#systemsettings">Election System Users</a>
@@ -288,9 +288,6 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                 <div class="card-body">
                   <div class="row">
                     <div class="col-xl-12 text-start">
-                      <a class="btn btn-primary btn-sm" type="button" href="addsebaccount.php" target="_self">
-                        add new student
-                      </a>
                     </div>
                     <div class="col-xl-12" style="margin-top: 10px">
                       <div class="table-responsive-lg">
@@ -302,7 +299,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                               <th>Council</th>
                               <th>Username</th>
                               <th>Password</th>
-                              <th>Actions</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -325,10 +322,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                                   <td style="
                                     border-right-color: var(--bs-card-cap-bg);
                                   ">
-                                    <a class="btn btn-primary btn-sm" type="button" href="editstudentprofile.php?id=<?php echo $st['student_id']; ?>" target="_self">
-                                      edit
-                                    </a>
-                                    <a class="btn btn-danger btn-sm" type="button" href="deletestudentaccount.php?=<?php echo $st['student_id']; ?>" target="_self">
+                                    <a class="btn btn-danger btn-sm" type="button" href="./deletestudentprofile.php?id=<?php echo $st['student_id']; ?>" target="_self">
                                       delete
                                     </a>
                                   </td>

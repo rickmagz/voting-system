@@ -2,21 +2,14 @@
 session_start();
 include '../db.php';
 
+$student_id = $_GET['id'];
 $first_name = $_SESSION['first_name'];
-$last_name = $_SESSION['last_name'];
-$student_id = $_SESSION['student_id'];
 
-$get_seb_id = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_id'") or die("Error in query: $get_seb_id." . mysqli_error($cxn));
+$get_student_info = mysqli_query($cxn, "SELECT * FROM student WHERE student_id='$student_id'") or die("Error in query: $get_student_info." . mysqli_error($cxn));
 
-if (mysqli_num_rows($get_seb_id) > 0) {
-    $i = mysqli_fetch_assoc($get_seb_id);
-    $_SESSION['id'] = $i['id'];
-    $id = $_SESSION['id'];
-    $img = $i['image'];
+if (mysqli_num_rows($get_student_info) > 0) {
+    $s = mysqli_fetch_assoc($get_student_info);
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +73,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
         </div>
     </nav>
     <main style="margin: 0 auto; margin-bottom: 54px;">
-        <form action="deletesebaccount.php" method="POST" id="deletesebprofile" enctype='multipart/form-data'>
+        <form action="deletestudentprofile.php" method="POST" id="deletesstudprofile" enctype='multipart/form-data'>
             <hr />
             <div class="card" style="
               margin-left: 100px;
@@ -93,7 +86,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                     <div class="row">
                         <div class="col mb-3 mt-3" id="id">
                             <span for="id">Student ID</span>
-                            <input type="text" class="form-control-plaintext" id="id" value="<?php echo $student_id; ?>" name="id" required />
+                            <input type="text" class="form-control-plaintext" id="id" value="<?php echo $s['student_id']; ?>" name="id" required />
                         </div>
                         <div class="col align-self-center" id="image">
 
@@ -102,54 +95,42 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                     <div class="row">
                         <div class="col " id="firstname-1">
                             <span for="name">First Name</span>
-                            <input type="text" class="form-control-plaintext" id="firstname" value="<?php echo $first_name; ?>" name="firstname" required />
+                            <input type="text" class="form-control-plaintext" id="firstname" value="<?php echo $s['first_name']; ?>" name="firstname" required />
                         </div>
                         <div class="col" id="lastname-1">
                             <span for="name">Last Name</span>
-                            <input type="text" class="form-control-plaintext" id="lastname" value="<?php echo $last_name; ?>" name="lastname" required />
+                            <input type="text" class="form-control-plaintext" id="lastname" value="<?php echo $s['last_name']; ?>" name="lastname" required />
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col mb-3 mt-3">
                             <span for="name">Council</span>
-                            <input type="text" class="form-control-plaintext" id="council" value="<?php echo $i['council']; ?>" name="council" readonly />
+                            <input type="text" class="form-control-plaintext" id="council" value="<?php echo $s['council']; ?>" name="council" readonly />
                         </div>
                         <div class="col mb-3 mt-3">
                             <span for="name">Course</span>
-                            <input type="text" class="form-control-plaintext" id="course" value="<?php echo $i['course']; ?>" name="course" readonly />
+                            <input type="text" class="form-control-plaintext" id="course" value="<?php echo $s['course']; ?>" name="course" readonly />
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-xl-6">
                             <span for="name">Major</span>
-                            <input type="text" class="form-control-plaintext" id="major" value="<?php echo $i['major']; ?>" name="major" readonly />
+                            <input type="text" class="form-control-plaintext" id="major" value="<?php echo $s['major']; ?>" name="major" readonly />
                         </div>
                         <div class="col-xl-3" id="year">
                             <span for="name">Year</span>
-                            <input type="text" class="form-control-plaintext" id="year" value="<?php echo $i['year']; ?>" name="year" readonly />
+                            <input type="text" class="form-control-plaintext" id="year" value="<?php echo $s['year']; ?>" name="year" readonly />
                         </div>
                         <div class="col-xl-3" id="section">
                             <span for="name">Section</span>
-                            <input type="text" class="form-control-plaintext" id="section" value="<?php echo $i['section']; ?>" name="section" readonly />
+                            <input type="text" class="form-control-plaintext" id="section" value="<?php echo $s['section']; ?>" name="section" readonly />
 
                         </div>
                     </div>
 
-                    <h2><strong>Login Credentials</strong></h2>
-                    <div class="row  mt-3 mb-3">
-                        <div class="col-xl-4" id="username">
-                            <label for="email">Username</label>
-                            <input type="text" class="form-control-plaintext" id="username" value="<?php echo $i['username']; ?>" name="username" required />
-                        </div>
-                        <div class="col-xl-4" id="password">
-                            <label for="email">Password</label>
-                            <input type="password" class="form-control-plaintext" id="password" value="<?php echo $i['password']; ?>" name="password" required />
-                        </div>
-
-                    </div>
-                    <button class="btn btn-primary" type="submit" name="delete" form="deletesebprofile">confirm delete</button>
+                    <button class="btn btn-primary" type="submit" name="delete" form="deletesstudprofile">confirm delete</button>
 
                     <a class="btn btn-secondary" href="settings.php">Cancel</a>
                 </div>
@@ -158,13 +139,10 @@ if (mysqli_num_rows($get_seb_id) > 0) {
     </main>
     <?php
     if (isset($_POST['delete'])) {
-        $id = $_SESSION['id'];
-        mysqli_query($cxn, "DELETE FROM `seb` WHERE `id`='$id'") or die(mysqli_error($cxn));
+        $id = $_POST['id'];
+        mysqli_query($cxn, "DELETE FROM student WHERE `student_id`='$id'") or die(mysqli_error($cxn));
 
-        echo "<script type='text/javascript'> alert('SEB Info deleted!'); location.href = 'index.php'; </script>";
-
-        session_destroy();
-        $cxn->close();
+        echo "<script type='text/javascript'> alert('Student Info deleted!'); location.href = 'settings.php'; </script>";
     }
     ?>
 
