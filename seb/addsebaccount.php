@@ -180,7 +180,7 @@ include 'db.php';
         </form>
     </main>
     <?php
-    $upload_folder = "/uploads";
+    $upload_folder = "../uploads";
 
     if (isset($_POST['addseb'])) {
         $student_id = $_POST['studentid'];
@@ -208,7 +208,7 @@ include 'db.php';
             $image = basename($_FILES["image"]["name"]);
             $targetFileFolder = $upload_folder . $image;
             $fileType = pathinfo($targetFileFolder, PATHINFO_EXTENSION);
-            $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+            $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'JPG');
 
             if (in_array($fileType, $allowTypes)) {
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFileFolder)) {
