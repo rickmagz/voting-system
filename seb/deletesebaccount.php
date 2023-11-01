@@ -4,14 +4,13 @@ include '../db.php';
 
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
-$student_id = $_SESSION['student_id'];
+$student_id = $_GET['id'];
 
 $get_seb_id = mysqli_query($cxn, "SELECT * FROM seb WHERE student_id='$student_id'") or die("Error in query: $get_seb_id." . mysqli_error($cxn));
 
 if (mysqli_num_rows($get_seb_id) > 0) {
     $i = mysqli_fetch_assoc($get_seb_id);
     $_SESSION['id'] = $i['id'];
-    $id = $_SESSION['id'];
     $img = $i['image'];
 }
 
@@ -80,7 +79,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
         </div>
     </nav>
     <main style="margin: 0 auto; margin-bottom: 54px;">
-        <form action="deletesebaccount.php" method="POST" id="deletesebprofile" enctype='multipart/form-data'>
+        <form action="./includes/deleteseb.php" method="POST" id="deletesebprofile" enctype='multipart/form-data'>
             <hr />
             <div class="card" style="
               margin-left: 100px;
@@ -102,11 +101,11 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                     <div class="row">
                         <div class="col " id="firstname-1">
                             <span for="name">First Name</span>
-                            <input type="text" class="form-control-plaintext" id="firstname" value="<?php echo $first_name; ?>" name="firstname" required />
+                            <input type="text" class="form-control-plaintext" id="firstname" value="<?php echo $i['first_name']; ?>" name="firstname" required />
                         </div>
                         <div class="col" id="lastname-1">
                             <span for="name">Last Name</span>
-                            <input type="text" class="form-control-plaintext" id="lastname" value="<?php echo $last_name; ?>" name="lastname" required />
+                            <input type="text" class="form-control-plaintext" id="lastname" value="<?php echo $i['last_name']; ?>" name="lastname" required />
                         </div>
                     </div>
 
@@ -156,17 +155,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
             </div>
         </form>
     </main>
-    <?php
-    if (isset($_POST['delete'])) {
-        $id = $_SESSION['id'];
-        mysqli_query($cxn, "DELETE FROM `seb` WHERE `id`='$id'") or die(mysqli_error($cxn));
 
-        echo "<script type='text/javascript'> alert('SEB Info deleted!'); location.href = 'index.php'; </script>";
-
-        session_destroy();
-        $cxn->close();
-    }
-    ?>
 
 
 
