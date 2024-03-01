@@ -13,7 +13,7 @@ $date = date('m/d/Y h:i:s A');
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Election Results - ISATU Miagao Campus Student Republic Election - SEC Dashboard</title>
+    <title>Election Results - ISATU Miagao Campus Student Republic Election - SEB Dashboard</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900&amp;display=swap">
@@ -27,7 +27,7 @@ $date = date('m/d/Y h:i:s A');
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-none" style="padding-top: 0px;padding-bottom: 0px;background: linear-gradient(-180deg, var(--bs-yellow) 39%, rgba(255,255,255,0.5) 100%);">
+    <nav class="navbar navbar-light navbar-expand-lg shadow-none" style="padding-top: 0px;padding-bottom: 0px;background: linear-gradient(-180deg, var(--bs-yellow) 39%, rgba(255,255,255,0.5) 100%);">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img width="75" height="75" src="../assets/img/ISAT-U-logo-shadow1.png"><img width="75" height="75" src="../assets/img/sr-logo.png"><span style="margin-left: 4px;font-family: Lato, sans-serif;font-weight: bold;">ISATU Miagao Campus <br>Student Republic Election <br>Dashboard</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto" style="color: var(--bs-black);font-weight: bold;">
@@ -52,8 +52,8 @@ $date = date('m/d/Y h:i:s A');
 
     <?php include './includes/count_votes.php'; ?>
 
-    <main style="margin: 25px;margin-bottom: 70px;">
-        <div class="row" id="tally" style="margin-top: 128px;margin-right: 24px;margin-left: 24px;">
+    <main>
+        <div class="row" id="tally" style="margin-right: 24px;margin-left: 24px; margin-bottom: 24px;">
             <div class="col-lg-12" data-aos="fade" id="tally-header">
                 <div class="container" style="padding: 0px;">
                     <section style="padding: 12px;padding-top: 12px;margin: 24px;">
@@ -66,7 +66,7 @@ $date = date('m/d/Y h:i:s A');
                     </section>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-3" data-aos="zoom-in" data-aos-delay="50" style="border-width: 1.4px;">
+            <div class="col-lg-6 col-xl-6 offset-xl-3" style="border-width: 1.4px;">
                 <p class="fs-5"><strong>PRESIDENT</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -120,7 +120,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-3" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-3">
                 <p class="fs-5"><strong>VICE PRESIDENT</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -170,7 +170,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-3" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-3">
                 <p class="fs-5"><strong>SENATOR</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -222,7 +222,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Computer Studies)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -271,7 +271,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Education)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -320,7 +320,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Hotel &amp; Business Mgt.)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -369,7 +369,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-lg-3 offset-xl-0">
                 <p class="fs-5"><strong>BATCH REPRESENTATIVE (Industrial Technology)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -418,7 +418,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>GOVERNOR (Computer Studies)</strong><br></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -467,7 +467,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>VICE GOVERNOR (Computer Studies)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -517,7 +517,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>GOVERNOR (Education)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -566,7 +566,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>VICE GOVERNOR (Education)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -615,7 +615,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>GOVERNOR (Hotel &amp;</strong>&nbsp;<strong>Business Mgt.)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -664,7 +664,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>VICE GOVERNOR (Hotel &amp;</strong>&nbsp;<strong>Business Mgt.)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -713,7 +713,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>GOVERNOR (Industrial Technology)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">
@@ -762,7 +762,7 @@ $date = date('m/d/Y h:i:s A');
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 offset-xl-0" data-aos="zoom-in" data-aos-delay="50">
+            <div class="col-lg-6 col-xl-6 offset-xl-0">
                 <p class="fs-5"><strong>VICE GOVERNOR (Industrial Technology)</strong></p>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-bordered">

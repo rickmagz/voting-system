@@ -40,7 +40,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
         var(--bs-white);
       margin: 0 auto;
     ">
-  <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-none" style="
+  <nav class="navbar navbar-light navbar-expand-lg shadow-none" style="
         padding-top: 0px;
         padding-bottom: 0px;
         background: linear-gradient(
@@ -78,8 +78,8 @@ if (mysqli_num_rows($get_seb_id) > 0) {
       </div>
     </div>
   </nav>
-  <main style="margin: 0 auto; margin-bottom: 491px">
-    <div class="row" style="margin-top: 128px; margin-right: 24px; margin-left: 24px">
+  <main>
+    <div class="row" style="margin-bottom: 50vh">
       <div class="col-sm-12 col-md-8 col-lg-12 col-xl-10 offset-md-0 offset-lg-0 offset-xl-1 align-self-center">
         <h2 style="font-family: Lato, sans-serif; font-weight: bold">
           System Global Settings<br />
@@ -97,6 +97,9 @@ if (mysqli_num_rows($get_seb_id) > 0) {
             <li class="nav-item border rounded" role="presentation">
               <a class="nav-link" role="tab" data-bs-toggle="tab" href="#studentmngt">Student Management</a>
             </li>
+            <li class="nav-item border rounded" role="presentation">
+              <a class="nav-link" role="tab" data-bs-toggle="tab" href="#electionctrl">Election Control</a>
+            </li>
           </ul>
           <div class="tab-content" style="
                 border-top-left-radius: 0px;
@@ -105,7 +108,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                 background: var(--bs-white);
               ">
             <!-- user profile -->
-            <div class="tab-pane fade show active" role="tabpanel" id="usersettings" style="
+            <div class="tab-pane fade active show" role="tabpanel" id="usersettings" style="
                   border-top-left-radius: 0px;
                   border-bottom-right-radius: 5px;
                   border-bottom-left-radius: 5px;
@@ -286,56 +289,110 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                 ">
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-xl-12 text-start">
-                    </div>
-                    <div class="col-xl-12" style="margin-top: 10px">
-                      <div class="table-responsive-lg">
-                        <table class="table table-hover table-sm table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Student ID</th>
-                              <th>Student Name</th>
-                              <th>Council</th>
-                              <th>Username</th>
-                              <th>Password</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php
-                            $g = 0;
-                            $get_student_info = mysqli_query($cxn, "SELECT * FROM student") or die("Error in query: $get_student_info." . mysqli_error($cxn));
+                  <!-- <div class="row">
+                    <form action="settings.php" method="POST">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter student ID...." name="search" required />
+                        <button class="btn btn-primary" type="submit" name="submit">Search</button>
+                      </div>
+                    </form>
+                  </div> -->
 
-                            if (mysqli_num_rows($get_student_info) > 0) {
-                              while ($st = mysqli_fetch_assoc($get_student_info)) {
+                  <div class="col-xl-12" style="margin-top: 10px">
+                    <div class="table-responsive-lg">
+                      <table class="table table-hover table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Council</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                          $g = 0;
+                          $get_student_info = mysqli_query($cxn, "SELECT * FROM student") or die("Error in query: $get_student_info." . mysqli_error($cxn));
 
-                                $g++;
+                          if (mysqli_num_rows($get_student_info) > 0) {
+                            while ($st = mysqli_fetch_assoc($get_student_info)) {
 
-                            ?>
-                                <tr>
-                                  <td><?php echo $st['student_id']; ?><br /></td>
-                                  <td><?php echo $st['first_name']; ?> <?php echo $st['last_name']; ?></td>
-                                  <td><?php echo $st['council']; ?></td>
-                                  <td><?php echo $st['username']; ?></td>
-                                  <td><?php echo $st['password']; ?></td>
-                                  <td style="
+                              $g++;
+
+                          ?>
+                              <tr>
+                                <td><?php echo $st['student_id']; ?><br /></td>
+                                <td><?php echo $st['first_name']; ?> <?php echo $st['last_name']; ?></td>
+                                <td><?php echo $st['council']; ?></td>
+                                <td><?php echo $st['username']; ?></td>
+                                <td><?php echo $st['password']; ?></td>
+                                <td style="
                                     border-right-color: var(--bs-card-cap-bg);
                                   ">
-                                    <a class="btn btn-danger btn-sm" type="button" href="./deletestudentprofile.php?id=<?php echo $st['student_id']; ?>" target="_self">
-                                      delete
-                                    </a>
-                                  </td>
+                                  <a class="btn btn-danger btn-sm" type="button" href="./deletestudentprofile.php?id=<?php echo $st['student_id']; ?>" target="_self">
+                                    delete
+                                  </a>
+                                </td>
 
-                                </tr>
-                            <?php
-                              }
+                              </tr>
+                          <?php
                             }
-                            ?>
-                          </tbody>
-                        </table>
-                      </div>
+                          }
+
+                          // if (isset($_POST['search'])) {
+                          //   $search = $_POST['search'];
+
+                          //   $search_query = mysqli_query($cxn, "SELECT * FROM student WHERE student_id LIKE '%$search%' ORDER BY student_id asc") or die("Error in query: $search_query." . mysqli_error($cxn));
+
+                          //   if ($search_query) {
+                          //     if (mysqli_num_rows($search_query) > 0) {
+                          //       while ($s - mysqli_fetch_assoc($search_query)) {
+                          //         echo '
+                          //         <tr>
+                          //           <td>' . $s['student_id'] . '</td>
+                          //           <td>' . $s['first_name'] . ' ' . $s['last_name'] . '</td>
+                          //           <td>' . $s['council'] . '</td>
+                          //           <td>' . $s['username'] . '</td>
+                          //           <td>' . $s['password'] . '</td>
+                          //           <td><a class="btn btn-danger btn-sm" type="button" href="./deletestudentprofile.php?id=' . $s['student_id'] . '" target="_self">
+                          //           delete</a></td>
+                          //         </tr>
+                          //           ';
+                          //       }
+                          //     } else {
+                          //       echo '
+                          //         <tr>
+                          //           <td>
+                          //             <h2>Data not found!</h2>
+                          //           </td>
+                          //         </tr>
+                          //       ';
+                          //     }
+                          //   }
+                          // }
+                          ?>
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- election control -->
+            <div class="tab-pane fade" role="tabpanel" id="electionctrl" style="
+                  border-top-left-radius: 0px;
+                  border-bottom-right-radius: 5px;
+                  border-bottom-left-radius: 5px;
+                  border: 1px solid var(--bs-gray-300);
+                  border-top-width: 0px;
+                  padding: 12px;
+                ">
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-xl-12" style="margin-top: 10px">
+
                   </div>
                 </div>
               </div>
@@ -344,11 +401,12 @@ if (mysqli_num_rows($get_seb_id) > 0) {
         </div>
       </div>
     </div>
+    </div>
   </main>
   <footer style="
         background: var(--bs-primary);
         box-shadow: 0px -2px 20px var(--bs-blue);
-      " data-bs-spy="scroll">
+      ">
     <div class="container">
       <p style="color: var(--bs-white); font-size: 16px">
         ©&nbsp;ISATU - Miagao Campus Student Republic Election 2023 All Rights
