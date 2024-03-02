@@ -74,3 +74,6 @@ while ($vicegov_row = mysqli_fetch_assoc($vicegov_votes_result)) {
     $vote_count = $vicegov_row['count'];
     $vicegov_votes[$candidate_id] = $vote_count;
 }
+
+
+//provided by AlgoFusion Dynamics

@@ -87,7 +87,7 @@ if (mysqli_num_rows($get_seb_id) > 0) {
       </div>
       <div class="col-xl-10 offset-xl-1">
         <div>
-          <ul class="nav nav-pills" role="tablist">
+          <ul class="nav nav-pills nav-fill" role="tablist">
             <li class="nav-item border rounded" role="presentation">
               <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#usersettings">My Profile</a>
             </li>
@@ -389,10 +389,67 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                   border-top-width: 0px;
                   padding: 12px;
                 ">
+              <?php
+              $get_regStat = mysqli_query($cxn, "SELECT * FROM election WHERE status_name='REGISTRATION' AND current_status='ENABLED'") or die("Error in query: $get_regStat." . mysqli_error($cxn));
+
+              $get_logStat = mysqli_query($cxn, "SELECT * FROM election WHERE status_name='LOGIN' AND current_status='ENABLED'") or die("Error in query: $get_logStat." . mysqli_error($cxn));
+
+
+              ?>
               <div class="card">
                 <div class="card-body">
                   <div class="col-xl-12" style="margin-top: 10px">
+                    <h3 style="font-family: Lato, sans-serif; font-weight: bold">
+                      Election Control <br />
+                      </h2>
+                      <table class="table" style="max-width:75vh; margin-left: 50px;">
+                        <thead>
+                          <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Enable/Disable Registration</th>
+                            <td>
 
+                              <?php
+                              if (mysqli_num_rows($get_regStat) == 1) {
+                                echo '<a class="btn btn-primary btn-sm" href="./includes/regEnabled.php">ENABLED</a>';
+                              } else {
+                                echo '<a class="btn btn-danger btn-sm" href="./includes/regDisabled.php">DISABLED</a>';
+                              }
+
+                              ?>
+
+
+
+                            </td>
+
+                          </tr>
+                          <tr>
+                            <th scope="row">Enable/Disable Login</th>
+                            <td>
+
+
+                              <?php
+                              if (mysqli_num_rows($get_logStat) == 1) {
+                                echo '<a class="btn btn-primary btn-sm" href="./includes/logEnabled.php">ENABLED</a>';
+                              } else {
+                                echo '<a class="btn btn-danger btn-sm" href="./includes/logDisabled.php">DISABLED</a>';
+                              }
+
+                              ?>
+
+
+
+                            </td>
+
+                          </tr>
+
+                        </tbody>
+                      </table>
                   </div>
                 </div>
               </div>
