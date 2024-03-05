@@ -289,14 +289,22 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                 ">
               <div class="card">
                 <div class="card-body">
-                  <!-- <div class="row">
-                    <form action="settings.php" method="POST">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Enter student ID...." name="search" required />
-                        <button class="btn btn-primary" type="submit" name="submit">Search</button>
-                      </div>
-                    </form>
-                  </div> -->
+                  <!--filters -->
+                  <div class="col" id="filters">
+                    <span class="fs-6 fw-bold text-dark">
+                      Filter by Council
+                    </span>
+                    <select class="border rounded border-1 border-secondary" style="padding-right: 0px;width: 175px;" name="fetchval" id="fetchval">
+                      <option value="Default" selected>Default</option>
+                      <option value="Education">Education</option>
+                      <option value="BIT">BIT</option>
+                      <option value="Computer Studies">Computer Studies</option>
+                      <option value="HBM">HBM</option>
+                    </select>
+                  </div>
+
+
+
 
                   <div class="col-xl-12" style="margin-top: 10px">
                     <div class="table-responsive-lg">
@@ -341,37 +349,6 @@ if (mysqli_num_rows($get_seb_id) > 0) {
                             }
                           }
 
-                          // if (isset($_POST['search'])) {
-                          //   $search = $_POST['search'];
-
-                          //   $search_query = mysqli_query($cxn, "SELECT * FROM student WHERE student_id LIKE '%$search%' ORDER BY student_id asc") or die("Error in query: $search_query." . mysqli_error($cxn));
-
-                          //   if ($search_query) {
-                          //     if (mysqli_num_rows($search_query) > 0) {
-                          //       while ($s - mysqli_fetch_assoc($search_query)) {
-                          //         echo '
-                          //         <tr>
-                          //           <td>' . $s['student_id'] . '</td>
-                          //           <td>' . $s['first_name'] . ' ' . $s['last_name'] . '</td>
-                          //           <td>' . $s['council'] . '</td>
-                          //           <td>' . $s['username'] . '</td>
-                          //           <td>' . $s['password'] . '</td>
-                          //           <td><a class="btn btn-danger btn-sm" type="button" href="./deletestudentprofile.php?id=' . $s['student_id'] . '" target="_self">
-                          //           delete</a></td>
-                          //         </tr>
-                          //           ';
-                          //       }
-                          //     } else {
-                          //       echo '
-                          //         <tr>
-                          //           <td>
-                          //             <h2>Data not found!</h2>
-                          //           </td>
-                          //         </tr>
-                          //       ';
-                          //     }
-                          //   }
-                          // }
                           ?>
                         </tbody>
                       </table>
@@ -475,6 +452,31 @@ if (mysqli_num_rows($get_seb_id) > 0) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/bs-init.js"></script>
   <script src="../assets/js/new-age.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#fetchval").on('change', function() {
+        var value = $(this).val();
+
+        $.ajax({
+          url: "fetchusers.php",
+          type: "POST",
+          data: 'request=' + value,
+          beforeSend: function() {
+            $(".table").html(`<span>
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="206px" height="206px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#1d3f72" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
+                        <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.8181818181818181s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
+                        </circle>
+                        </svg>
+                        </span>`);
+          },
+          success: function(data) {
+            $(".table").html(data);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
